@@ -23,7 +23,7 @@ const messagesFromReactAppListener = (
     message.from === Sender.React &&
     message.message === "delete logo"
   ) {
-    const logo = document.getElementById("hplogo");
+    const logo = document.getElementById("lnXdpd");
     logo?.parentElement?.removeChild(logo);
   }
 };

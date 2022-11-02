@@ -1,6 +1,6 @@
 {
-    "name": "Hello Extensions",
-    "description": "Base Level Extension",
+    "name": "GCB Extension",
+    "description": "Extension to keep track of your internet usage",
     "version": "1.0",
     "manifest_version": 2,
     "browser_action": {

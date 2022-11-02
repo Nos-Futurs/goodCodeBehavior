@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { ChromeMessage, Sender } from "./types";
 
 import "./App.css";
+import ToggleSwitch from "./components/ToggleSwitch/ToggleSwitch";
 
 function App() {
   const [url, setUrl] = useState<string>("");
   const [responseFromContent, setResponseFromContent] = useState<string>("");
+  const [grey, setGrey] = useState<boolean>(false);
 
   /**
    * Get current URL
@@ -22,60 +23,26 @@ function App() {
       });
   }, []);
 
-  /**
-   * Send message to the content script
-   */
-  const sendTestMessage = () => {
-    const message: ChromeMessage = {
-      from: Sender.React,
-      message: "Hello from React",
-    };
-
+  const setBlackAndWhite = (status: boolean) => {
     const queryInfo: chrome.tabs.QueryInfo = {
       active: true,
       currentWindow: true,
     };
-
-    /**
-     * We can't use "chrome.runtime.sendMessage" for sending messages from React.
-     * For sending messages from React we need to specify which tab to send it to.
-     */
-    chrome.tabs &&
-      chrome.tabs.query(queryInfo, (tabs) => {
-        const currentTabId = tabs[0].id;
-        /**
-         * Sends a single message to the content script(s) in the specified tab,
-         * with an optional callback to run when a response is sent back.
-         *
-         * The runtime.onMessage event is fired in each content script running
-         * in the specified tab for the current extension.
-         */
-        if (currentTabId) {
-          chrome.tabs.sendMessage(currentTabId, message, (response) => {
-            setResponseFromContent(response);
-          });
-        }
-      });
-  };
-
-  const sendRemoveMessage = () => {
-    const message: ChromeMessage = {
-      from: Sender.React,
-      message: "delete logo",
-    };
-
-    const queryInfo: chrome.tabs.QueryInfo = {
-      active: true,
-      currentWindow: true,
-    };
-
     chrome.tabs &&
       chrome.tabs.query(queryInfo, (tabs) => {
         const currentTabId = tabs[0].id;
         if (currentTabId) {
-          chrome.tabs.sendMessage(currentTabId, message, (response) => {
-            setResponseFromContent(response);
-          });
+          if (status){
+            chrome.tabs.insertCSS(currentTabId, {
+              code: "body { filter: grayscale(100%); }",
+              allFrames: true,
+            });
+          } else if (!status) {
+            chrome.tabs.insertCSS(currentTabId, {
+              code: "body { filter: grayscale(0); }",
+              allFrames: true,
+            });
+          }
         }
       });
   };
@@ -83,13 +50,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={"./logo.svg"} className="App-logo" alt="logo" />
         <p>URL:</p>
         <p>{url}</p>
-        <button onClick={sendTestMessage}>SEND MESSAGE</button>
-        <button onClick={sendRemoveMessage}>Remove logo</button>
-        <p>Response from content:</p>
-        <p>{responseFromContent}</p>
+        <ToggleSwitch
+          label={"Set black and white"}
+          status={grey}
+          onClick={() => {
+            setBlackAndWhite(!grey);
+            setGrey(!grey);
+          }}
+        />
       </header>
     </div>
   );
