@@ -7,6 +7,7 @@
 }
 .labelContainer {
   padding: 15px;
+  font-size: 15px;
 }
 .toggle-switch {
   position: relative;
@@ -23,13 +24,16 @@
   overflow: hidden;
   cursor: pointer;
   border: 0 solid #bbb;
+  height: 30px;
   border-radius: 20px;
 }
 .inner {
-  display: block;
+  display: flex;
   width: 200%;
   margin-left: -100%;
   transition: margin 0.3s ease-in 0s;
+  height: 100%;
+  align-items: center;
 }
 .inner:before,
 .inner:after {
@@ -44,12 +48,14 @@
 }
 .inner:before {
   content: 'YES';
+  font-size: 13px;
   padding-left: 10px;
-  background-color: #0a558c;
+  background-color: rgba(51, 170, 51, .7);
   color: #fff;
 }
 .inner:after {
   content: 'NO';
+  font-size: 13px;
   padding-right: 10px;
   background-color: #bbb;
   color: #fff;
@@ -57,7 +63,7 @@
 }
 .switch {
   display: block;
-  width: 24px;
+  width: 20px;
   margin: 5px;
   background: #fff;
   position: absolute;

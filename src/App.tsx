@@ -24,10 +24,7 @@ function App() {
 
   return (
     <div className="App">
-       <header className="App-header">
-        <p>URL:</p>
-        <p>{url}</p>
-      </header>
+      <header className="Header">GCB - Monitor your internet usage</header>
       <Analysis />
       <Toolbox />
       <Comparison />
