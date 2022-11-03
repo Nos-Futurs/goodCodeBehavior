@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { CategoryHeader } from "../../shared/categoryHeader";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 
 export const Toolbox = () => {
+  const [dropDown, setDropDown] = useState<boolean>(false);
   const [grey, setGrey] = useState<boolean>(false);
 
   const setBlackAndWhite = (status: boolean) => {
@@ -35,30 +37,22 @@ export const Toolbox = () => {
           margin: "10px 0 10px 0",
         }}
       >
-        <div
-          style={{
-            fontSize: "20px",
-            borderColor: "#282c34",
-            width: "40%",
-            padding: "8px",
-            marginLeft: "10px",
-            borderBottom: "solid",
-            borderBottomWidth: "2px",
-            textTransform: "uppercase",
-            fontWeight: "600"
-          }}
-        >
-          Toolbox
-        </div>
+        <CategoryHeader
+          title="Toolbox"
+          dropDown={dropDown}
+          setDropDown={setDropDown}
+        />
       </div>
-      <ToggleSwitch
-        label={"Set black and white"}
-        status={grey}
-        onClick={() => {
-          setBlackAndWhite(!grey);
-          setGrey(!grey);
-        }}
-      />
+      {dropDown && (
+        <ToggleSwitch
+          label={"Set black and white"}
+          status={grey}
+          onClick={() => {
+            setBlackAndWhite(!grey);
+            setGrey(!grey);
+          }}
+        />
+      )}
     </div>
   );
 };
