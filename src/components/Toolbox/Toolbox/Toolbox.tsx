@@ -16,15 +16,9 @@ export const Toolbox = () => {
         const currentTabId = tabs[0].id;
         if (currentTabId) {
           if (status) {
-            chrome.tabs.insertCSS(currentTabId, {
-              code: "body { filter: grayscale(100%); }",
-              allFrames: true,
-            });
+            chrome.scripting.insertCSS({ target: { tabId: currentTabId, allFrames: true }, css: "body { filter: grayscale(100%); }" })
           } else if (!status) {
-            chrome.tabs.insertCSS(currentTabId, {
-              code: "body { filter: grayscale(0); }",
-              allFrames: true,
-            });
+            chrome.scripting.insertCSS({ target: { tabId: currentTabId, allFrames: true }, css: "body { filter: grayscale(100%); }" })
           }
         }
       });
