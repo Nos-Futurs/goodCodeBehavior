@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CategoryHeader } from "../shared/categoryHeader";
+import { CategoryHeader } from "../Shared/categoryHeader";
 
 export const Comparison = () => {
   const [dropDown, setDropDown] = useState<boolean>(false);

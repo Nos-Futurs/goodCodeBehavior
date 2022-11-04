@@ -47,21 +47,22 @@ function processTabChanged(isChromeActive: boolean) {
         function (result) {
           const lastActiveWebSite = result[lastActiveUrlDomain];
           const tabsTimeString = result[tabsTime];
-          console.log(result);
+          console.log('result', result);
 
           // get tabsTimeObject and lastActiveUrlDomain
           let tabTimeObject: any = {};
-          if (tabsTimeString !== null) {
+          if (tabsTimeString) {
             tabTimeObject = JSON.parse(tabsTimeString);
           }
           let lastActiveTab: any = {};
-          if (lastActiveWebSite !== null) {
+          if (lastActiveWebSite) {
             lastActiveTab = JSON.parse(lastActiveWebSite);
           }
           let currentDate = Date.now();
 
           // If there is a last active url in storage
           if (
+            lastActiveTab &&
             lastActiveTab.hasOwnProperty("url") &&
             lastActiveTab.hasOwnProperty("lastDateEval")
           ) {
@@ -108,3 +109,8 @@ function processTabChanged(isChromeActive: boolean) {
     }
   });
 }
+
+function onTabTrack(){
+    processTabChanged(true)
+}
+chrome.tabs.onActivated.addListener(onTabTrack);

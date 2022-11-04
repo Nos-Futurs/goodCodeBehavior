@@ -1,6 +1,6 @@
 import React from "react";
-import dropDownImage from "./../assets/dropdown.png";
-import dropUpImage from "./../assets/dropup.png";
+import dropDownImage from "./../Assets/dropdown.png";
+import dropUpImage from "./../Assets/dropup.png";
 
 interface categoryHeaderProps {
   title: string;
