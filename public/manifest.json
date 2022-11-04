@@ -15,8 +15,11 @@
         "run_at": "document_end"
       }
     ],
+    "background": {
+      "service_worker": "./static/js/background.js"
+    },
     "permissions": [
-      "activeTab", "scripting"
+      "activeTab", "scripting", "tabs", "storage", "declarativeContent"
     ],
     "icons": {
       "16": "images/logo192.png",
