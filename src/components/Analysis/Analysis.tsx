@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { CategoryHeader } from "../shared/categoryHeader";
+import { CategoryHeader } from "../Shared/categoryHeader";
+import { TimeTracking } from "./TimeTracking/TimeTracking";
 
 export const Analysis = () => {
   const [dropDown, setDropDown] = useState<boolean>(false);
@@ -14,7 +15,7 @@ export const Analysis = () => {
         dropDown={dropDown}
         setDropDown={setDropDown}
       />
-      {dropDown && <div>This is where we should put our analysis</div>}
+      {dropDown && <TimeTracking/>}
     </div>
   );
 };

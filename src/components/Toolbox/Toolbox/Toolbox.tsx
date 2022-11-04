@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CategoryHeader } from "../../shared/categoryHeader";
+import { CategoryHeader } from "../../Shared/categoryHeader";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 
 export const Toolbox = () => {
@@ -18,7 +18,7 @@ export const Toolbox = () => {
           if (status) {
             chrome.scripting.insertCSS({ target: { tabId: currentTabId, allFrames: true }, css: "body { filter: grayscale(100%); }" })
           } else if (!status) {
-            chrome.scripting.insertCSS({ target: { tabId: currentTabId, allFrames: true }, css: "body { filter: grayscale(100%); }" })
+            chrome.scripting.insertCSS({ target: { tabId: currentTabId, allFrames: true }, css: "body { filter: grayscale(0%); }" })
           }
         }
       });
