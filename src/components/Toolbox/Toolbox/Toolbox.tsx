@@ -2,26 +2,16 @@ import React, { useState } from "react";
 import { CategoryHeader } from "../../Shared/categoryHeader";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 
-export const Toolbox = () => {
+interface ToolboxProps {
+  port: chrome.runtime.Port;
+}
+
+export const Toolbox = ({ port }: ToolboxProps) => {
   const [dropDown, setDropDown] = useState<boolean>(false);
   const [grey, setGrey] = useState<boolean>(false);
 
   const setBlackAndWhite = (status: boolean) => {
-    const queryInfo: chrome.tabs.QueryInfo = {
-      active: true,
-      currentWindow: true,
-    };
-    chrome.tabs &&
-      chrome.tabs.query(queryInfo, (tabs) => {
-        const currentTabId = tabs[0].id;
-        if (currentTabId) {
-          if (status) {
-            chrome.scripting.insertCSS({ target: { tabId: currentTabId, allFrames: true }, css: "body { filter: grayscale(100%); }" })
-          } else if (!status) {
-            chrome.scripting.insertCSS({ target: { tabId: currentTabId, allFrames: true }, css: "body { filter: grayscale(0%); }" })
-          }
-        }
-      });
+    port.postMessage("setBlackAndWhite");
   };
 
   return (
