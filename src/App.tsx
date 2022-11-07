@@ -7,6 +7,7 @@ import { Toolbox } from "./components/Toolbox/Toolbox/Toolbox";
 
 function App() {
   const [url, setUrl] = useState<string>("");
+  const port = chrome.runtime.connect({ name: "Background Connection" });
 
   /**
    * Get current URL
@@ -22,11 +23,12 @@ function App() {
       });
   }, []);
 
+
   return (
     <div className="App">
       <header className="Header">GCB - Monitor your internet usage</header>
       <Analysis />
-      <Toolbox />
+      <Toolbox port={port}/>
       <Comparison />
     </div>
   );
