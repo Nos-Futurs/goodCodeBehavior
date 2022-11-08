@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { ChartLegendItem } from "./Legend";
-import { TimeTrackingChart } from "./TimeTrackingChart";
+import { IconButton } from "../../Shared/IconButton";
+import details from "./../../Assets/details.png";
+import infos from "./../../Assets/infos.png";
+import { ChartBlock } from "./ChartBlock";
 
 const timeTrackingPercentage = (
   data: { domain: string; time: number }[]
@@ -57,6 +59,7 @@ const timeTrackingPercentage = (
 
 export const TimeTracking = () => {
   const [timeTracked, setTimeTracked] = useState<any>([]);
+  const [shwoDetails, setShwoDetails] = useState<boolean>(false);
   const [chartData, setChartData] = useState<
     { title: string; value: number; color: string }[]
   >([]);
@@ -84,37 +87,30 @@ export const TimeTracking = () => {
     <div style={{ flexDirection: "column" }}>
       <div
         style={{
-          width: "400px",
-          height: "300px",
           marginTop: "15px",
           marginBottom: "30px",
+          display: "flex",
+          flexDirection: "row",
         }}
       >
+        <ChartBlock chartData={chartData} />
         <div
           style={{
-            margin: "15px",
-            padding: "15px",
-            flexDirection: "row",
+            marginBottom: "15px",
             display: "flex",
-            alignItems: "center",
-            border: "solid",
-            borderWidth: "2px", 
-            borderColor: "rgba(58, 112, 39, 1)",
-            borderRadius: "10px"
+            flexDirection: "column",
+            justifyContent: "end",
           }}
         >
-          <TimeTrackingChart chartData={chartData} />
-          <div style={{ flexDirection: "column", display: "flex", padding: "20px" }}>
-            {chartData.map((legend) => {
-              return <ChartLegendItem legendItem={legend} />;
-            })}
-          </div>
+          <IconButton title={"Detail"} icon={details} onClick={() => {setShwoDetails(!shwoDetails)}} />
+          <IconButton title={"Infos"} icon={infos} onClick={() => {}} />
         </div>
       </div>
 
-      {timeTracked.map((item: { domain: string; time: string }) => {
-        return <div>{item.domain + " : " + item.time + "seconds"}</div>;
-      })}
+      {shwoDetails &&
+        timeTracked.map((item: { domain: string; time: string }) => {
+          return <div>{item.domain + " : " + item.time + "seconds"}</div>;
+        })}
     </div>
   );
 };
