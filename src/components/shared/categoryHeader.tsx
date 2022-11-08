@@ -24,6 +24,7 @@ export const CategoryHeader = ({
         marginLeft: "10px",
         borderBottom: "solid",
         borderBottomWidth: "2px",
+        borderBottomColor: "rgba(58, 112, 39, 1)",
         textTransform: "uppercase",
         fontWeight: "600",
         flexDirection: "row",

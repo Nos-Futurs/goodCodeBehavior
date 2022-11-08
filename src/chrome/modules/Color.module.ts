@@ -140,7 +140,6 @@ export function checkBrowserColor() {
         if (tabsColorStatusString) {
           tabsColorStatusObject = JSON.parse(tabsColorStatusString);
         }
-        console.log(tabsColorStatusObject)
 
         // If tabsColorStatusObject exists and the domain already has a status defined then :
         if (
@@ -151,7 +150,6 @@ export function checkBrowserColor() {
             // if colors are on, set page to black and white
             changeTabsColor(tabs, false)
           } else {
-            console.log('testé')
             changeTabsColor(tabs, true)
           }
         }
