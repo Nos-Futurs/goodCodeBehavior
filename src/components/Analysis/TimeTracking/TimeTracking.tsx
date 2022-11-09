@@ -3,6 +3,7 @@ import { IconButton } from "../../Shared/IconButton";
 import details from "./../../Assets/details.png";
 import infos from "./../../Assets/infos.png";
 import { ChartBlock } from "./ChartBlock";
+import { TimeTrackingDetails } from "./TimeTrackingDetails";
 
 const timeTrackingPercentage = (
   data: { domain: string; time: number }[]
@@ -57,9 +58,14 @@ const timeTrackingPercentage = (
   return resultArray;
 };
 
-export const TimeTracking = () => {
+interface TimeTrackingProps {
+  port: chrome.runtime.Port;
+}
+
+export const TimeTracking = ({ port }: TimeTrackingProps) => {
   const [timeTracked, setTimeTracked] = useState<any>([]);
   const [shwoDetails, setShwoDetails] = useState<boolean>(false);
+  const [startDate, setStartDate] = useState<Date | null>(null);
   const [chartData, setChartData] = useState<
     { title: string; value: number; color: string }[]
   >([]);
@@ -67,8 +73,12 @@ export const TimeTracking = () => {
   useEffect(() => {
     // declare the data fetching function
     const fetchData = async () => {
-      const data = await chrome.storage.local.get("tabsTimeObject");
+      const data = await chrome.storage.local.get([
+        "tabsTimeObject",
+        "startingTimeAnalyseDate",
+      ]);
       const dataObject = JSON.parse(data["tabsTimeObject"]);
+      const startingAnalyseDate = JSON.parse(data["startingTimeAnalyseDate"]);
       let dataArray = [];
       for (let timeInfos in dataObject) {
         dataArray.push({
@@ -77,11 +87,16 @@ export const TimeTracking = () => {
         });
       }
       setChartData(timeTrackingPercentage(dataArray));
+      setStartDate(new Date(startingAnalyseDate));
       setTimeTracked(dataArray);
     };
     // call the function
     fetchData();
   }, []);
+
+  const eraseTimeData = () => {
+    port.postMessage("ResetTimeAnalysis");
+  };
 
   return (
     <div style={{ flexDirection: "column" }}>
@@ -102,15 +117,24 @@ export const TimeTracking = () => {
             justifyContent: "end",
           }}
         >
-          <IconButton title={"Detail"} icon={details} onClick={() => {setShwoDetails(!shwoDetails)}} />
+          <IconButton
+            title={"Detail"}
+            icon={details}
+            onClick={() => {
+              setShwoDetails(!shwoDetails);
+            }}
+          />
           <IconButton title={"Infos"} icon={infos} onClick={() => {}} />
         </div>
       </div>
 
-      {shwoDetails &&
-        timeTracked.map((item: { domain: string; time: string }) => {
-          return <div>{item.domain + " : " + item.time + "seconds"}</div>;
-        })}
+      {shwoDetails && (
+        <TimeTrackingDetails
+          port={port}
+          startDate={startDate}
+          timeTracked={timeTracked}
+        />
+      )}
     </div>
   );
 };

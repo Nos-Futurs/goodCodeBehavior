@@ -1,4 +1,4 @@
-import { getDomainName } from "./Shared";
+import { getDomainName } from "./Shared.module";
 
 // Use local storage to manage black and white mode
 export function changeColor() {

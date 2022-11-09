@@ -26,7 +26,8 @@ export const ChartBlock = ({ chartData }: ChartBlockProps) => {
         style={{
           flexDirection: "column",
           display: "flex",
-          padding: "20px",
+          paddingLeft: "20px",
+          paddingRight: "10px"
         }}
       >
         {chartData.map((legend) => {

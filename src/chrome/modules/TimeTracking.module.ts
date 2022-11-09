@@ -1,7 +1,8 @@
-import { getDomainName } from "./Shared";
+import { getDomainName } from "./Shared.module";
 
 const tabsTime = "tabsTimeObject";
 const lastActiveUrlDomain = "lastActivetab";
+const startingTimeAnalyseDate = "startingTimeAnalyseDate";
 
 // Use local storage to calculate the time you (actively) spend on each webSite
 export function processTabChanged(isChromeActive: boolean) {
@@ -16,21 +17,25 @@ export function processTabChanged(isChromeActive: boolean) {
         throw new Error("url not found");
       }
       chrome.storage.local.get(
-        [tabsTime, lastActiveUrlDomain],
+        [tabsTime, lastActiveUrlDomain, startingTimeAnalyseDate],
         function (result) {
           const lastActiveWebSite = result[lastActiveUrlDomain];
           const tabsTimeString = result[tabsTime];
-
+          const startingDate = result[startingTimeAnalyseDate];
           // get tabsTimeObject and lastActiveUrlDomain
           let tabTimeObject: any = {};
-          if (tabsTimeString) {
+          if (JSON.stringify(tabsTimeString) !== "{}") {
             tabTimeObject = JSON.parse(tabsTimeString);
           }
           let lastActiveTab: any = {};
-          if (lastActiveWebSite) {
+          if (JSON.stringify(lastActiveWebSite) !== "{}") {
             lastActiveTab = JSON.parse(lastActiveWebSite);
           }
           let currentDate = Date.now();
+          let startingDateAnalysis: number =
+            startingDate !== null
+              ? parseInt(JSON.parse(startingDate))
+              : currentDate;
 
           // If there is a last active url in storage
           if (
@@ -49,11 +54,13 @@ export function processTabChanged(isChromeActive: boolean) {
               if (lastUrlObjectInfos.hasOwnProperty("trackedSeconds")) {
                 lastUrlObjectInfos["trackedSeconds"] =
                   lastUrlObjectInfos["trackedSeconds"] + passedSeconds;
-              } else { // we didn't track secondes for this url
+              } else {
+                // we didn't track secondes for this url
                 lastUrlObjectInfos["trackedSeconds"] = passedSeconds;
               }
               lastUrlObjectInfos["lastDateEval"] = currentDate;
-            } else { // not register, create It 
+            } else {
+              // not register, create It
               let newUrlInfo = {
                 url: lastUrl,
                 trackedSeconds: passedSeconds,
@@ -64,24 +71,35 @@ export function processTabChanged(isChromeActive: boolean) {
           }
 
           let lastTabInfo: any = { url: domainName, lastDateEval: currentDate };
-          if (!isChromeActive) { // we stop measuring time if chrome is not active
+          if (!isChromeActive) {
+            // we stop measuring time if chrome is not active
             lastTabInfo = {};
           }
-          let newStorageInfo: any = {}
+          let newStorageInfo: any = {};
           newStorageInfo[lastActiveUrlDomain] = JSON.stringify(lastTabInfo);
 
-          chrome.storage.local.set(newStorageInfo, function(){
-            const tabsTimeString = JSON.stringify(tabTimeObject)
-            let newTabTimeObject: any = {}
-            newTabTimeObject[tabsTime] = tabsTimeString
-            chrome.storage.local.set(newTabTimeObject, function(){})
-          })
+          chrome.storage.local.set(newStorageInfo, function () {
+            const tabsTimeString = JSON.stringify(tabTimeObject);
+            const startingDateString = JSON.stringify(startingDateAnalysis);
+            let newTabTimeObject: any = {};
+            newTabTimeObject[tabsTime] = tabsTimeString;
+            newTabTimeObject[startingTimeAnalyseDate] = startingDateString;
+            chrome.storage.local.set(newTabTimeObject, function () {});
+          });
         }
       );
     }
   });
 }
 
-export function onTabTrack(){
-    processTabChanged(true);
+export function onTabTrack() {
+  processTabChanged(true);
+}
+
+export function clearTimeStorage() {
+  let newStorageInfo: any = {};
+  newStorageInfo[tabsTime] = {};
+  newStorageInfo[lastActiveUrlDomain] = {};
+  newStorageInfo[startingTimeAnalyseDate] = null;
+  chrome.storage.local.set(newStorageInfo, function () {});
 }

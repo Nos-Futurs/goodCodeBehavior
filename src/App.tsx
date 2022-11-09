@@ -27,7 +27,7 @@ function App() {
   return (
     <div className="App">
       <header className="Header">GCB - Monitor your internet usage</header>
-      <Analysis />
+      <Analysis port={port}/>
       <Toolbox port={port}/>
       <Comparison />
     </div>

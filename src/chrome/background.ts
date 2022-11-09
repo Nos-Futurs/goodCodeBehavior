@@ -1,5 +1,5 @@
 import { changeBrowserColor, checkBrowserColor } from "./modules/Color.module";
-import { onTabTrack, processTabChanged } from "./modules/TimeTracking.module";
+import { clearTimeStorage, onTabTrack, processTabChanged } from "./modules/TimeTracking.module";
 
 // starts when you are on chrome window
 chrome.windows.onFocusChanged.addListener(function (windowId: number) {
@@ -31,6 +31,9 @@ chrome.runtime.onConnect.addListener(function (port) {
     console.log("message recieved" + msg);
     if (msg === "setBlackAndWhite") {
       changeBrowserColor();
+    }
+    if (msg === "ResetTimeAnalysis") {
+      clearTimeStorage();
     }
   });
 });
