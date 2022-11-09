@@ -6,7 +6,11 @@ import co2_cloud from "./../Assets/co2-cloud.png";
 import lighting from "./../Assets/lighting.png";
 import { TimeTracking } from "./TimeTracking/TimeTracking";
 
-export const Analysis = () => {
+interface AnalysisProps {
+  port: chrome.runtime.Port;
+}
+
+export const Analysis = ({port}: AnalysisProps) => {
   const [dropDown, setDropDown] = useState<boolean>(false);
   const [type, setType] = useState<String>("Time");
   return (
@@ -46,7 +50,7 @@ export const Analysis = () => {
               onClick={() => setType("CO2")}
             />
           </div>
-          {type === "Time" && <TimeTracking />}
+          {type === "Time" && <TimeTracking port={port}/>}
           {type === "Energy" && <></>}
           {type === "CO2" && <></>}
         </div>

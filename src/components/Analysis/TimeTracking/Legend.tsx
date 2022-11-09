@@ -21,7 +21,16 @@ export const ChartLegendItem = ({ legendItem }: ChartLegendProps) => {
           backgroundColor: legendItem.color,
         }}
       />
-      <div style={{ paddingLeft: "10px" }}>{legendItem.title}</div>
+      <div
+        style={{
+          paddingLeft: "10px",
+          wordWrap: "break-word",
+          overflowWrap: "break-word",
+          width: "80px",
+        }}
+      >
+        {legendItem.title}
+      </div>
     </div>
   );
 };
