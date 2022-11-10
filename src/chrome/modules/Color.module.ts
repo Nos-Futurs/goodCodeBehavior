@@ -212,9 +212,9 @@ function changeTabsColor(tabs: chrome.tabs.Tab[], toBlackAndWhite: boolean) {
           css: "body { filter: grayscale(100%); }",
         });
       } else {
-        chrome.scripting.insertCSS({
+        chrome.scripting.removeCSS({
           target: { tabId: tabIndexId, allFrames: true },
-          css: "body { filter: grayscale(0%); }",
+          css: "body { filter: grayscale(100%); }",
         });
       }
     }

@@ -1,6 +1,6 @@
 import React from "react";
 import { ChartLegendItem } from "./Legend";
-import { TimeTrackingChart } from "./TimeTrackingChart";
+import { TimeTrackingChart } from "../../Analysis/TimeTracking/TimeTrackingChart";
 
 interface ChartBlockProps {
   chartData: { title: string; value: number; color: string }[];

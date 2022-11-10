@@ -41,7 +41,7 @@ export const Toolbox = ({ port }: ToolboxProps) => {
       {dropDown && (
         <ToggleSwitch
           label={"Set black and white"}
-          status={grey}
+          status={!grey}
           onClick={() => {
             setBlackAndWhite(!grey);
             setGrey(!grey);
