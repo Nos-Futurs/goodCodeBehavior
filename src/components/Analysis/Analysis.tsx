@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { ButtonIcon } from "../Shared/ButtonIcon";
 import { CategoryHeader } from "../Shared/categoryHeader";
+import { AnalysisTypeEnum } from "../Shared/methods/enum";
 import clock from "./../Assets/clock.png";
 import co2_cloud from "./../Assets/co2-cloud.png";
 import lighting from "./../Assets/lighting.png";
+import { EnergyCarbonTracking } from "./EnergyCarbon/EnergyCarbon";
 import { TimeTracking } from "./TimeTracking/TimeTracking";
 
 interface AnalysisProps {
@@ -12,7 +14,7 @@ interface AnalysisProps {
 
 export const Analysis = ({port}: AnalysisProps) => {
   const [dropDown, setDropDown] = useState<boolean>(false);
-  const [type, setType] = useState<String>("Time");
+  const [type, setType] = useState<AnalysisTypeEnum>(AnalysisTypeEnum.TIME);
   return (
     <div
       style={{
@@ -37,22 +39,21 @@ export const Analysis = ({port}: AnalysisProps) => {
             <ButtonIcon
               title={"Time"}
               icon={clock}
-              onClick={() => setType("Time")}
+              onClick={() => setType(AnalysisTypeEnum.TIME)}
             />
             <ButtonIcon
               title={"Energy"}
               icon={lighting}
-              onClick={() => setType("Energy")}
+              onClick={() => setType(AnalysisTypeEnum.ENERGY)}
             />
             <ButtonIcon
               title={"CO2"}
               icon={co2_cloud}
-              onClick={() => setType("CO2")}
+              onClick={() => setType(AnalysisTypeEnum.CARBON)}
             />
           </div>
-          {type === "Time" && <TimeTracking port={port}/>}
-          {type === "Energy" && <></>}
-          {type === "CO2" && <></>}
+          {type === AnalysisTypeEnum.TIME && <TimeTracking port={port}/>}
+          {type !== AnalysisTypeEnum.TIME && <EnergyCarbonTracking port={port} dataType={type}/>}
         </div>
       )}
     </div>

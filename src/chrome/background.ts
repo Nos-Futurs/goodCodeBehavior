@@ -1,5 +1,10 @@
+import { headersReceivedListener } from "./modules/Carbon.module";
 import { changeBrowserColor, checkBrowserColor } from "./modules/Color.module";
-import { clearTimeStorage, onTabTrack, processTabChanged } from "./modules/TimeTracking.module";
+import {
+  clearTimeStorage,
+  onTabTrack,
+  processTabChanged,
+} from "./modules/TimeTracking.module";
 
 // starts when you are on chrome window
 chrome.windows.onFocusChanged.addListener(function (windowId: number) {
@@ -37,3 +42,7 @@ chrome.runtime.onConnect.addListener(function (port) {
     }
   });
 });
+
+chrome.webRequest.onCompleted.addListener(function (event: any) {
+  headersReceivedListener(event);
+}, {urls: ["https://*/*"]},["responseHeaders"]);

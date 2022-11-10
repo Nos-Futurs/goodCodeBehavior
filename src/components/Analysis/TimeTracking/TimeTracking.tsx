@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IconButton } from "../../Shared/IconButton";
 import details from "./../../Assets/details.png";
 import infos from "./../../Assets/infos.png";
-import { ChartBlock } from "./ChartBlock";
+import { ChartBlock } from "../../Shared/PieChart/ChartBlock";
 import { TimeTrackingDetails } from "./TimeTrackingDetails";
 
 const timeTrackingPercentage = (
