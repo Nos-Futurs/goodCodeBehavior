@@ -1,16 +1,5 @@
 import React from "react";
-
-const formatItemTime = (time: number) => {
-  const timeInSeconds = Math.floor(time);
-  const hours = Math.floor(timeInSeconds / 3600);
-  const minutes = Math.floor((timeInSeconds - hours * 3600) / 60);
-  const seconds = timeInSeconds - hours * 3600 - minutes * 60;
-
-  const hoursString = hours > 0 ? `${hours} hours ` : "";
-  const minutesString = hours > 0 || minutes > 0 ? `${minutes} minutes ` : "";
-  const secondsString = `${seconds} seconds`;
-  return hoursString + minutesString + secondsString;
-};
+import { formatItemTime } from "./Time.methods";
 
 const setDecreasingOrder = (timeTracked: { domain: string; time: string }[]) => {
     timeTracked.sort((a, b) => parseFloat(b.time) - parseFloat(a.time));
@@ -29,7 +18,7 @@ export const TimeTrackingDetails = ({
   startDate,
 }: TimeTrackingDetailsProps) => {
   const eraseTimeData = () => {
-    port.postMessage("ResetTimeAnalysis");
+    port.postMessage("ResetAnalysis");
   };
   const timeTrackedDescending = setDecreasingOrder(timeTracked)
 
@@ -37,7 +26,7 @@ export const TimeTrackingDetails = ({
     <div style={{ margin: "15px" }}>
       <div style={{display: "flex", flexDirection: "row", alignItems: "center", marginBottom: "15px" }}>
         <div style={{paddingRight: "15px"}}>{`The analysis started at : ${startDate?.toLocaleString()}`}</div>
-        <button onClick={eraseTimeData}>Reset Time Analysis</button>
+        <button onClick={eraseTimeData}>Reset Analysis</button>
       </div>
       <div>
         {timeTrackedDescending.map((item: { domain: string; time: string }) => {

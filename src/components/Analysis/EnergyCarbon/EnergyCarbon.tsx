@@ -4,6 +4,7 @@ import { AnalysisTypeEnum } from "../../Shared/methods/enum";
 import { ChartBlock } from "../../Shared/PieChart/ChartBlock";
 import details from "./../../Assets/details.png";
 import infos from "./../../Assets/infos.png";
+import { CarbonDetails } from "./EnergyCarbonDetails";
 import {
   carbonTrackingPercentage,
   energyAndCarbonFromBytes,
@@ -105,7 +106,13 @@ export const EnergyCarbonTracking = ({
         </div>
       </div>
 
-      {shwoDetails && <div>details</div>}
+      {shwoDetails && (
+        <CarbonDetails
+          port={port}
+          startDate={startDate}
+          dataTracked={allDataTracked}
+        />
+      )}
     </div>
   );
 };

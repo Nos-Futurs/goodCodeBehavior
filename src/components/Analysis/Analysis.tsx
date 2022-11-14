@@ -42,11 +42,6 @@ export const Analysis = ({port}: AnalysisProps) => {
               icon={clock}
               onClick={() => setType(AnalysisTypeEnum.TIME)}
             />
-            {/* <ButtonIcon
-              title={"Energy"}
-              icon={lighting}
-              onClick={() => setType(AnalysisTypeEnum.ENERGY)}
-            /> */}
             <ButtonIcon
               title={"Data"}
               icon={data}
