@@ -1,4 +1,7 @@
-import { headersReceivedListener } from "./modules/Carbon.module";
+import {
+  clearCarbonAnalysis,
+  headersReceivedListener,
+} from "./modules/Carbon.module";
 import { changeBrowserColor, checkBrowserColor } from "./modules/Color.module";
 import {
   clearTimeStorage,
@@ -37,12 +40,20 @@ chrome.runtime.onConnect.addListener(function (port) {
     if (msg === "setBlackAndWhite") {
       changeBrowserColor();
     }
-    if (msg === "ResetTimeAnalysis") {
+    if (msg === "ResetAnalysis") {
       clearTimeStorage();
+      clearCarbonAnalysis();
+      chrome.storage.local.get(function (result) {
+        console.log(result);
+      });
     }
   });
 });
 
-chrome.webRequest.onCompleted.addListener(function (event: any) {
-  headersReceivedListener(event);
-}, {urls: ["https://*/*"]},["responseHeaders"]);
+chrome.webRequest.onCompleted.addListener(
+  function (event: any) {
+    headersReceivedListener(event);
+  },
+  { urls: ["https://*/*"] },
+  ["responseHeaders"]
+);

@@ -1,11 +1,9 @@
 import { getDomainName } from "./Shared.module";
 
-
 const setByteLengthPerOrigin = (origin: string, byteLength: number) => {
-  console.log(origin, byteLength);
   chrome.storage.local.get(["TabsCarbon"], function (result) {
     const tabsCarbonJSON =
-      result["TabsCarbon"] === "null" || JSON.stringify(result) === "{}"
+      result["TabsCarbon"] === null || JSON.stringify(result) === "{}"
         ? {}
         : JSON.parse(result["TabsCarbon"]);
     let bytePerOrigin =
@@ -15,10 +13,8 @@ const setByteLengthPerOrigin = (origin: string, byteLength: number) => {
     tabsCarbonJSON[origin] = bytePerOrigin + byteLength;
     let newStorageInfo: any = {};
     newStorageInfo["TabsCarbon"] = JSON.stringify(tabsCarbonJSON);
+
     chrome.storage.local.set(newStorageInfo, function () {});
-    chrome.storage.local.get(["TabsCarbon"], function (result) {
-      console.log(result);
-    });
   });
 };
 
@@ -36,7 +32,8 @@ export const headersReceivedListener = (details: any) => {
   setByteLengthPerOrigin(origin, requestSize);
 };
 
-export const clearCarbonAnalysis = (details: any) => {
+export const clearCarbonAnalysis = () => {
+  console.log("chocolat");
   let newStorageInfo: any = {};
   newStorageInfo["TabsCarbon"] = null;
   chrome.storage.local.set(newStorageInfo, function () {});
