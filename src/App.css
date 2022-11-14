@@ -8,16 +8,3 @@
   justify-content: center;
   border-radius: 5px;
 }
-
-.Header {
-  padding: 10px;
-  font-size: 20px;
-  align-items: left;
-  background-color: rgba(51, 170, 51, .7);
-  border-bottom: solid;
-  border-width: 3px;
-  border-color: #282c34;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-

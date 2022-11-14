@@ -5,6 +5,7 @@ import { AnalysisTypeEnum } from "../Shared/methods/enum";
 import clock from "./../Assets/clock.png";
 import co2_cloud from "./../Assets/co2-cloud.png";
 import lighting from "./../Assets/lighting.png";
+import data from "./../Assets/data.png";
 import { EnergyCarbonTracking } from "./EnergyCarbon/EnergyCarbon";
 import { TimeTracking } from "./TimeTracking/TimeTracking";
 
@@ -41,11 +42,16 @@ export const Analysis = ({port}: AnalysisProps) => {
               icon={clock}
               onClick={() => setType(AnalysisTypeEnum.TIME)}
             />
-            <ButtonIcon
+            {/* <ButtonIcon
               title={"Energy"}
               icon={lighting}
               onClick={() => setType(AnalysisTypeEnum.ENERGY)}
-            />
+            /> */}
+            <ButtonIcon
+              title={"Data"}
+              icon={data}
+              onClick={() => setType(AnalysisTypeEnum.DATA)}
+            /> 
             <ButtonIcon
               title={"CO2"}
               icon={co2_cloud}
