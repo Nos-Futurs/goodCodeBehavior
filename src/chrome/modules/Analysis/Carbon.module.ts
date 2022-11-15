@@ -1,4 +1,4 @@
-import { getDomainName } from "./Shared.module";
+import { getDomainName } from "../Shared.module";
 
 const setByteLengthPerOrigin = (origin: string, byteLength: number) => {
   chrome.storage.local.get(["TabsCarbon"], function (result) {
