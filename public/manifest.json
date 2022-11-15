@@ -7,19 +7,18 @@
       "default_popup": "index.html",
       "default_title": "Open the popup"
     },
-    "content_scripts": [
-      {
-        "matches": ["http://*/*", "https://*/*"],
-        "js": ["./static/js/content.js"],
-        "all_frames": false,
-        "run_at": "document_end"
-      }
-    ],
     "background": {
       "service_worker": "./static/js/background.js"
     },
     "permissions": [
-      "activeTab", "scripting", "tabs", "storage", "declarativeContent", "webRequest", "*://*.google.com/"
+      "activeTab", 
+      "scripting", 
+      "tabs", 
+      "storage", 
+      "declarativeContent", 
+      "webRequest", 
+      "*://*.google.com/", 
+      "declarativeNetRequest"
     ],
     "host_permissions": ["http://*/*", "https://*/*", "chrome://"],
     "icons": {

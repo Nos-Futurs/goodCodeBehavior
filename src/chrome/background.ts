@@ -3,6 +3,7 @@ import {
   headersReceivedListener,
 } from "./modules/Carbon.module";
 import { changeBrowserColor, checkBrowserColor } from "./modules/Color.module";
+import { setBrowserOffline } from "./modules/Offline.module";
 import {
   clearTimeStorage,
   onTabTrack,
@@ -43,9 +44,9 @@ chrome.runtime.onConnect.addListener(function (port) {
     if (msg === "ResetAnalysis") {
       clearTimeStorage();
       clearCarbonAnalysis();
-      chrome.storage.local.get(function (result) {
-        console.log(result);
-      });
+    }
+    if (msg === "SetUnactiveTabsOffline"){
+      setBrowserOffline()
     }
   });
 });

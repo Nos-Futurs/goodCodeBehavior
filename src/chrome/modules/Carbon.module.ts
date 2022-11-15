@@ -33,7 +33,6 @@ export const headersReceivedListener = (details: any) => {
 };
 
 export const clearCarbonAnalysis = () => {
-  console.log("chocolat");
   let newStorageInfo: any = {};
   newStorageInfo["TabsCarbon"] = null;
   chrome.storage.local.set(newStorageInfo, function () {});

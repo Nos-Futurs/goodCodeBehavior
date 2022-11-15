@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { CategoryHeader } from "../../Shared/categoryHeader";
-import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+import { CategoryHeader } from "../Shared/categoryHeader";
+import ToggleSwitch from "./ToggleSwitch/ToggleSwitch";
 
 interface ToolboxProps {
   port: chrome.runtime.Port;
@@ -9,6 +9,7 @@ interface ToolboxProps {
 export const Toolbox = ({ port }: ToolboxProps) => {
   const [dropDown, setDropDown] = useState<boolean>(false);
   const [grey, setGrey] = useState<boolean>(false);
+  const [offline, setOffline] = useState<boolean>(false);
 
   useEffect(() => {
     // declare the data fetching function
@@ -21,8 +22,12 @@ export const Toolbox = ({ port }: ToolboxProps) => {
     fetchData();
   }, []);
 
-  const setBlackAndWhite = (status: boolean) => {
+  const blackAndWhiteBackground = () => {
     port.postMessage("setBlackAndWhite");
+  };
+
+  const onlineBackground = () => {
+    port.postMessage("SetUnactiveTabsOffline");
   };
 
   return (
@@ -39,14 +44,24 @@ export const Toolbox = ({ port }: ToolboxProps) => {
         />
       </div>
       {dropDown && (
-        <ToggleSwitch
-          label={"Set black and white"}
-          status={!grey}
-          onClick={() => {
-            setBlackAndWhite(!grey);
-            setGrey(!grey);
-          }}
-        />
+        <div>
+          <ToggleSwitch
+            label={"Set black and white"}
+            status={!grey}
+            onClick={() => {
+              blackAndWhiteBackground();
+              setGrey(!grey);
+            }}
+          />
+          <ToggleSwitch
+            label={"Set non-active tabs offline"}
+            status={offline}
+            onClick={() => {
+              onlineBackground();
+              setOffline(!offline);
+            }}
+          />
+        </div>
       )}
     </div>
   );

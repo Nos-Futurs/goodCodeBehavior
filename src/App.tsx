@@ -5,7 +5,7 @@ import { Analysis } from "./components/Analysis/Analysis";
 import { Comparison } from "./components/Comparison/Comparison";
 import { ExtensionHeader } from "./components/ExtensionHeader/ExtensionHeader";
 import { Summary } from "./components/Summary/summary";
-import { Toolbox } from "./components/Toolbox/Toolbox/Toolbox";
+import { Toolbox } from "./components/Toolbox/Toolbox";
 
 function App() {
   const [url, setUrl] = useState<string>("");

@@ -8,7 +8,6 @@ module.exports = {
   mode: prod ? 'production' : 'development',
   entry: {
     main: "./src/index.tsx",
-    content: './src/chrome/content.ts', 
     background: './src/chrome/background.ts'
   },
   output: {
