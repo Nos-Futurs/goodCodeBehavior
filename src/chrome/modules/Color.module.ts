@@ -147,9 +147,9 @@ export function checkBrowserColor() {
         ) {
           if (tabsColorStatusObject["colorStatus"]) {
             // if colors are on, set page to black and white
-            changeTabsColor(tabs, false);
+            changeTabsToBW(tabs, false);
           } else {
-            changeTabsColor(tabs, true);
+            changeTabsToBW(tabs, true);
           }
         }
       });
@@ -177,14 +177,14 @@ export function changeBrowserColor() {
         ) {
           const colorStatus = tabsColorStatusObject["colorStatus"];
           if (colorStatus) {
-            changeTabsColor(tabs, true);
+            changeTabsToBW(tabs, true);
             tabsColorStatusObject["colorStatus"] = false;
           } else {
-            changeTabsColor(tabs, false);
+            changeTabsToBW(tabs, false);
             tabsColorStatusObject["colorStatus"] = true;
           }
         } else {
-          changeTabsColor(tabs, true);
+          changeTabsToBW(tabs, true);
           tabsColorStatusObject["colorStatus"] = false;
         }
         // update local storage
@@ -200,7 +200,7 @@ export function changeBrowserColor() {
 
 // PRIVATE FUNCTIONS
 
-function changeTabsColor(tabs: chrome.tabs.Tab[], toBlackAndWhite: boolean) {
+function changeTabsToBW(tabs: chrome.tabs.Tab[], toBlackAndWhite: boolean) {
   for (let index = 0; index < tabs.length; index++) {
     let tabIndexId = tabs[index].id;
     if (tabIndexId) {

@@ -3,10 +3,10 @@
   flex-direction: row;
   display: flex;
   align-items: center;
-  padding: 15px;
+  margin: 15px;
 }
 .labelContainer {
-  padding: 15px;
+  padding-left: 40px;
   font-size: 15px;
 }
 .toggle-switch {
@@ -14,7 +14,6 @@
   width: 75px;
   display: inline-block;
   text-align: left;
-  padding-left: 20px;
 }
 .checkbox {
   display: none;

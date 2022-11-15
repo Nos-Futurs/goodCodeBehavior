@@ -14,6 +14,7 @@ export function setBrowserOffline() {
             chrome.declarativeNetRequest.updateSessionRules({
               removeRuleIds: [1],
             });
+            setOfflineStatus(false);
           } catch (err) {
             console.log("not available to go offline", err);
           }
@@ -33,6 +34,7 @@ export function setBrowserOffline() {
               ],
               removeRuleIds: [1],
             });
+            setOfflineStatus(true);
           } catch (err) {
             console.log("not available to go offline", err);
           }
@@ -41,3 +43,12 @@ export function setBrowserOffline() {
     }
   });
 }
+
+// PRIVATE METHODS
+
+const setOfflineStatus = (statut: boolean) => {
+  let newStorageInfo: any = {};
+  newStorageInfo["offlineStatut"] = JSON.stringify(statut);
+
+  chrome.storage.local.set(newStorageInfo, function () {});
+};
