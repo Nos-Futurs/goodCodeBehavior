@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './ToggleSwitch.css';
+import React from "react";
+import "./ToggleSwitch.css";
 
 interface MySwitchProps {
   disabled?: boolean;
@@ -8,10 +8,14 @@ interface MySwitchProps {
   onClick?: () => void;
 }
 
-function ToggleSwitch({ disabled = false, onClick = () => {}, status = false, label }: MySwitchProps) {
+function ToggleSwitch({
+  disabled = false,
+  onClick = () => {},
+  status = false,
+  label,
+}: MySwitchProps) {
   return (
     <div className="container">
-      <div className="labelContainer">{label}</div>
       <div className="toggle-switch">
         <input
           type="checkbox"
@@ -29,6 +33,7 @@ function ToggleSwitch({ disabled = false, onClick = () => {}, status = false, la
           <span className="switch" />
         </label>
       </div>
+      <div className="labelContainer">{label}</div>
     </div>
   );
 }

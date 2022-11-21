@@ -1,13 +1,15 @@
 import {
   clearCarbonAnalysis,
   headersReceivedListener,
-} from "./modules/Carbon.module";
-import { changeBrowserColor, checkBrowserColor } from "./modules/Color.module";
+} from "./modules/Analysis/Carbon.module";
+import { changeBrowserColor, checkBrowserColor } from "./modules/Tools/Color.module";
+import { setBrowserOffline } from "./modules/Tools/Offline.module";
 import {
   clearTimeStorage,
   onTabTrack,
   processTabChanged,
-} from "./modules/TimeTracking.module";
+} from "./modules/Analysis/TimeTracking.module";
+import { dontDownloadImage } from "./modules/Tools/Download.module";
 
 // starts when you are on chrome window
 chrome.windows.onFocusChanged.addListener(function (windowId: number) {
@@ -43,9 +45,12 @@ chrome.runtime.onConnect.addListener(function (port) {
     if (msg === "ResetAnalysis") {
       clearTimeStorage();
       clearCarbonAnalysis();
-      chrome.storage.local.get(function (result) {
-        console.log(result);
-      });
+    }
+    if (msg === "SetUnactiveTabsOffline"){
+      setBrowserOffline()
+    }
+    if (msg === "dontDownloadImage"){
+      dontDownloadImage()
     }
   });
 });

@@ -1,4 +1,4 @@
-import { getDomainName } from "./Shared.module";
+import { getDomainName } from "../Shared.module";
 
 // Use local storage to manage black and white mode
 export function changeColor() {
@@ -130,11 +130,10 @@ export function checkBrowserColor() {
   // get current tab
   chrome.tabs.query({}, function (tabs) {
     if (tabs.length > 0) {
-  
       // get storage to see domain color status
       chrome.storage.local.get(["browserColorStatus"], function (result) {
         const tabsColorStatusString = result["browserColorStatus"];
-  
+
         // get tabsColorStatusObject if exists
         let tabsColorStatusObject: any = {};
         if (tabsColorStatusString) {
@@ -148,9 +147,9 @@ export function checkBrowserColor() {
         ) {
           if (tabsColorStatusObject["colorStatus"]) {
             // if colors are on, set page to black and white
-            changeTabsColor(tabs, false)
+            changeTabsToBW(tabs, false);
           } else {
-            changeTabsColor(tabs, true)
+            changeTabsToBW(tabs, true);
           }
         }
       });
@@ -178,14 +177,14 @@ export function changeBrowserColor() {
         ) {
           const colorStatus = tabsColorStatusObject["colorStatus"];
           if (colorStatus) {
-            changeTabsColor(tabs, true)
+            changeTabsToBW(tabs, true);
             tabsColorStatusObject["colorStatus"] = false;
           } else {
-            changeTabsColor(tabs, false)
+            changeTabsToBW(tabs, false);
             tabsColorStatusObject["colorStatus"] = true;
           }
         } else {
-          changeTabsColor(tabs, true)
+          changeTabsToBW(tabs, true);
           tabsColorStatusObject["colorStatus"] = false;
         }
         // update local storage
@@ -199,23 +198,28 @@ export function changeBrowserColor() {
   });
 }
 
-
 // PRIVATE FUNCTIONS
 
-function changeTabsColor(tabs: chrome.tabs.Tab[], toBlackAndWhite: boolean) {
+function changeTabsToBW(tabs: chrome.tabs.Tab[], toBlackAndWhite: boolean) {
   for (let index = 0; index < tabs.length; index++) {
     let tabIndexId = tabs[index].id;
     if (tabIndexId) {
       if (toBlackAndWhite) {
         chrome.scripting.insertCSS({
-          target: { tabId: tabIndexId, allFrames: true },
-          css: "body { filter: grayscale(100%); }",
+          target: { tabId: tabIndexId },
+          css: "html { filter: grayscale(100%); }",
         });
       } else {
-        chrome.scripting.insertCSS({
-          target: { tabId: tabIndexId, allFrames: true },
-          css: "body { filter: grayscale(0%); }",
-        });
+        try {
+          chrome.scripting.removeCSS({
+            target: {
+              tabId: tabIndexId 
+            },
+            css: "html { filter: grayscale(100%); }",
+          });
+        } catch (err) {
+          console.error(`failed to remove CSS: ${err}`);
+        }
       }
     }
   }

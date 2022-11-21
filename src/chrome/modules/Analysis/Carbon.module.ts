@@ -1,4 +1,4 @@
-import { getDomainName } from "./Shared.module";
+import { getDomainName } from "../Shared.module";
 
 const setByteLengthPerOrigin = (origin: string, byteLength: number) => {
   chrome.storage.local.get(["TabsCarbon"], function (result) {
@@ -33,7 +33,6 @@ export const headersReceivedListener = (details: any) => {
 };
 
 export const clearCarbonAnalysis = () => {
-  console.log("chocolat");
   let newStorageInfo: any = {};
   newStorageInfo["TabsCarbon"] = null;
   chrome.storage.local.set(newStorageInfo, function () {});

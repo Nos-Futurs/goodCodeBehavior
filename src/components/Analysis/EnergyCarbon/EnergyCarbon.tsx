@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IconButton } from "../../Shared/IconButton";
+import { IconButton } from "../../Shared/Buttons/IconButton";
 import { AnalysisTypeEnum } from "../../Shared/methods/enum";
 import { ChartBlock } from "../../Shared/PieChart/ChartBlock";
 import details from "./../../Assets/details.png";
@@ -72,10 +72,10 @@ export const EnergyCarbonTracking = ({
     <div style={{ flexDirection: "column" }}>
       <div
         style={{
-          marginTop: "15px",
+          marginTop: "10px",
           marginBottom: "30px",
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
         }}
       >
         <ChartBlock
@@ -89,10 +89,9 @@ export const EnergyCarbonTracking = ({
         />
         <div
           style={{
-            marginBottom: "15px",
+            margin: "0px 15px 15px 15px",
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "end",
+            flexDirection: "row",
           }}
         >
           <IconButton

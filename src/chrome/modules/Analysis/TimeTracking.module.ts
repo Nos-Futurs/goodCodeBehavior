@@ -1,4 +1,4 @@
-import { getDomainName } from "./Shared.module";
+import { getDomainName } from "../Shared.module";
 
 const tabsTime = "tabsTimeObject";
 const lastActiveUrlDomain = "lastActivetab";
