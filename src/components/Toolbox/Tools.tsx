@@ -4,9 +4,10 @@ import ToggleSwitch from "./ToggleSwitch/ToggleSwitch";
 
 interface ToolsProps {
   port: chrome.runtime.Port;
+  url: string;
 }
 
-export const Tools = ({ port }: ToolsProps) => {
+export const Tools = ({ port, url }: ToolsProps) => {
   const [dropDown, setDropDown] = useState<boolean>(false);
   const [imageDownloading, setImageDownloading] = useState<boolean>(false);
   const [grey, setGrey] = useState<boolean>(false);
@@ -66,7 +67,7 @@ export const Tools = ({ port }: ToolsProps) => {
           setImageDownloading(!imageDownloading);
         }}
       />
-      <InputBox label={"Manage your time rules : "} url={"test.com"} />
+      <InputBox label={"Manage your time rules : "} url={url} />
     </div>
   );
 };

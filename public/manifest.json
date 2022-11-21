@@ -22,8 +22,8 @@
     ],
     "host_permissions": ["http://*/*", "https://*/*", "chrome://"],
     "icons": {
-      "16": "images/logo192.png",
-      "48": "images/logo192.png",
-      "128": "images/logo192.png"
+      "16": "images/logo.png",
+      "48": "images/logo.png",
+      "128": "images/logo.png"
     } 
 }

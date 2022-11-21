@@ -10,7 +10,7 @@ export const ChartBlock = ({ chartData }: ChartBlockProps) => {
   return (
     <div
       style={{
-        margin: "15px",
+        margin: "10px",
         padding: "15px",
         flexDirection: "row",
         display: "flex",

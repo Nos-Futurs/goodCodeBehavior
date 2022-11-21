@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getDomainName } from "../../chrome/modules/Shared.module";
 import { CategoryHeader } from "../Shared/categoryHeader";
 import { Tools } from "./Tools";
 
@@ -8,6 +9,22 @@ interface ToolboxProps {
 
 export const Toolbox = ({ port }: ToolboxProps) => {
   const [dropDown, setDropDown] = useState<boolean>(false);
+  const [url, setUrl] = useState<string>("");
+
+  /**
+   * Get current URL
+   */
+  useEffect(() => {
+    const queryInfo = { active: true, lastFocusedWindow: true };
+    chrome.tabs &&
+      chrome.tabs.query(queryInfo, (tabs) => {
+        const url = tabs[0].url;
+        if (url) {
+          const domainUrl = getDomainName(url)
+          setUrl(domainUrl);
+        }
+      });
+  }, []);
 
   return (
     <div style={{ marginBottom: "10px" }}>
@@ -22,7 +39,7 @@ export const Toolbox = ({ port }: ToolboxProps) => {
           setDropDown={setDropDown}
         />
       </div>
-      {dropDown && <Tools port={port} />}
+      {dropDown && <Tools port={port} url={url} />}
     </div>
   );
 };

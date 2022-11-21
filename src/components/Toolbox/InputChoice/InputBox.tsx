@@ -19,7 +19,7 @@ function InputBox({
   return (
     <div
       style={{
-        margin: "15px",
+        margin: "25px 15px 15px 15px",
         padding: "15px",
         fontSize: "15px",
         backgroundColor: "rgba(58, 112, 39, 0.5)",
@@ -39,11 +39,24 @@ function InputBox({
         }}
       >
         <div style={{ paddingRight: "5px" }}>{url}</div>
-        <select style={{ width: "50px", marginRight: "5px" }} />
+        <input
+          type="number"
+          style={{ width: "50px", marginRight: "5px" }}
+          placeholder="000"
+          min="0"
+        />
         <div style={{ paddingRight: "25px" }}> min </div>
-        <ButtonIcon title="Add rules" onClick={onClickFirst} />
       </div>
-      <ButtonIcon title="See rules" onClick={onClickSecond} />
+      <div
+        style={{
+          paddingTop: "5px",
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <ButtonIcon title="Add rule" onClick={onClickFirst} />
+        <ButtonIcon title="See rules" onClick={onClickSecond} />
+      </div>
     </div>
   );
 }

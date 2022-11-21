@@ -5,7 +5,6 @@ import details from "./../../Assets/details.png";
 import infos from "./../../Assets/infos.png";
 import { timeTrackingPercentage } from "./Time.methods";
 import { TimeTrackingDetails } from "./TimeTrackingDetails";
-
 interface TimeTrackingProps {
   port: chrome.runtime.Port;
 }
@@ -46,19 +45,18 @@ export const TimeTracking = ({ port }: TimeTrackingProps) => {
     <div style={{ flexDirection: "column" }}>
       <div
         style={{
-          marginTop: "15px",
+          marginTop: "10px",
           marginBottom: "30px",
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
         }}
       >
         <ChartBlock chartData={chartData} />
         <div
           style={{
-            marginBottom: "15px",
+            margin: "0px 15px 15px 15px",
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "end",
+            flexDirection: "row",
           }}
         >
           <IconButton

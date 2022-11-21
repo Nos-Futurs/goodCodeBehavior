@@ -72,10 +72,10 @@ export const EnergyCarbonTracking = ({
     <div style={{ flexDirection: "column" }}>
       <div
         style={{
-          marginTop: "15px",
+          marginTop: "10px",
           marginBottom: "30px",
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
         }}
       >
         <ChartBlock
@@ -89,10 +89,9 @@ export const EnergyCarbonTracking = ({
         />
         <div
           style={{
-            marginBottom: "15px",
+            margin: "0px 15px 15px 15px",
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "end",
+            flexDirection: "row",
           }}
         >
           <IconButton

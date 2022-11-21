@@ -1,5 +1,5 @@
 import React from "react";
-import fake_logo from "./../Assets/fake_logo.png";
+import fake_logo from "./../Assets/GCB_Logo.png";
 
 interface ExtensionHeaderProps {}
 
