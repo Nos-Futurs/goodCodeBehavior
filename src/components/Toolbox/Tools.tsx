@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import InputBox from "./InputChoice/InputBox";
 import ToggleSwitch from "./ToggleSwitch/ToggleSwitch";
 
 interface ToolsProps {
@@ -14,11 +15,12 @@ export const Tools = ({ port }: ToolsProps) => {
   useEffect(() => {
     // declare the data fetching function
     const fetchData = async () => {
-      const data = await chrome.storage.local.get(["browserColorStatus", "offlineStatut"]);
+      const data = await chrome.storage.local.get([
+        "browserColorStatus",
+        "offlineStatut",
+      ]);
       const dataColorObject = JSON.parse(data["browserColorStatus"]);
       const dataOfflineObject = JSON.parse(data["offlineStatut"]);
-      console.log(dataOfflineObject);
-      console.log(dataColorObject);
       setOffline(dataOfflineObject);
       setGrey(dataColorObject["colorStatus"]);
     };
@@ -34,8 +36,12 @@ export const Tools = ({ port }: ToolsProps) => {
     port.postMessage("SetUnactiveTabsOffline");
   };
 
+  const dontDownloadImage = () => {
+    port.postMessage("dontDownloadImage");
+  };
+
   return (
-    <div>
+    <div style={{ marginTop: "15px" }}>
       <ToggleSwitch
         label={"Set black and white"}
         status={!grey}
@@ -56,9 +62,11 @@ export const Tools = ({ port }: ToolsProps) => {
         label={"Don't download image"}
         status={imageDownloading}
         onClick={() => {
-            setImageDownloading(!imageDownloading)
+          dontDownloadImage();
+          setImageDownloading(!imageDownloading);
         }}
       />
+      <InputBox label={"Manage your time rules : "} url={"test.com"} />
     </div>
   );
 };

@@ -9,6 +9,7 @@ import {
   onTabTrack,
   processTabChanged,
 } from "./modules/Analysis/TimeTracking.module";
+import { dontDownloadImage } from "./modules/Tools/Download.module";
 
 // starts when you are on chrome window
 chrome.windows.onFocusChanged.addListener(function (windowId: number) {
@@ -47,6 +48,9 @@ chrome.runtime.onConnect.addListener(function (port) {
     }
     if (msg === "SetUnactiveTabsOffline"){
       setBrowserOffline()
+    }
+    if (msg === "dontDownloadImage"){
+      dontDownloadImage()
     }
   });
 });

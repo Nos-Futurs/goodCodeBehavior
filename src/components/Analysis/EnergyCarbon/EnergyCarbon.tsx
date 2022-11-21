@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IconButton } from "../../Shared/IconButton";
+import { IconButton } from "../../Shared/Buttons/IconButton";
 import { AnalysisTypeEnum } from "../../Shared/methods/enum";
 import { ChartBlock } from "../../Shared/PieChart/ChartBlock";
 import details from "./../../Assets/details.png";

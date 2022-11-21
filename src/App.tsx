@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import "./App.css";
 import { Analysis } from "./components/Analysis/Analysis";
-import { Comparison } from "./components/Comparison/Comparison";
 import { ExtensionHeader } from "./components/ExtensionHeader/ExtensionHeader";
 import { Summary } from "./components/Summary/summary";
 import { Toolbox } from "./components/Toolbox/Toolbox";
@@ -31,7 +30,6 @@ function App() {
       <Summary />
       <Analysis port={port} />
       <Toolbox port={port} />
-      <Comparison />
     </div>
   );
 }

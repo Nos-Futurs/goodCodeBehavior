@@ -1,8 +1,9 @@
-export function setBrowserOffline() {
-  const data = chrome.storage.local.get("offlineStatut", (result) => {
-    const isOfflineObject = JSON.parse(result["offlineStatut"]);
-    const offlineStatut = isOfflineObject !== undefined ? isOfflineObject: false;
-    chrome.tabs.query({ active: false }, function (tabs) {
+export function dontDownloadImage() {
+  chrome.storage.local.get("downloadStatut", (result) => {
+    const isOfflineObject = JSON.parse(result["downloadStatut"]);
+    const offlineStatut =
+      isOfflineObject !== undefined ? isOfflineObject : false;
+    chrome.tabs.query({}, function (tabs) {
       let NonActiveTabsId: number[] = [];
       if (tabs.length > 0) {
         tabs.map((tab) => {
@@ -16,7 +17,7 @@ export function setBrowserOffline() {
               chrome.declarativeNetRequest.updateSessionRules({
                 removeRuleIds: [1],
               });
-              setOfflineStatus(false);
+              setDownloadStatus(false);
             } catch (err) {
               console.log("not available to go offline", err);
             }
@@ -30,13 +31,16 @@ export function setBrowserOffline() {
                       type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
                     },
                     condition: {
+                      resourceTypes: [
+                        chrome.declarativeNetRequest.ResourceType.IMAGE,
+                      ],
                       tabIds: NonActiveTabsId,
                     },
                   },
                 ],
                 removeRuleIds: [1],
               });
-              setOfflineStatus(true);
+              setDownloadStatus(true);
             } catch (err) {
               console.log("not available to go offline", err);
             }
@@ -49,9 +53,9 @@ export function setBrowserOffline() {
 
 // PRIVATE METHODS
 
-const setOfflineStatus = (statut: boolean) => {
+const setDownloadStatus = (statut: boolean) => {
   let newStorageInfo: any = {};
-  newStorageInfo["offlineStatut"] = JSON.stringify(statut);
+  newStorageInfo["downloadStatut"] = JSON.stringify(statut);
 
   chrome.storage.local.set(newStorageInfo, function () {});
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ButtonIcon } from "../Shared/ButtonIcon";
+import { ButtonIcon } from "../Shared/Buttons/ButtonIcon";
 import { CategoryHeader } from "../Shared/categoryHeader";
 import { AnalysisTypeEnum } from "../Shared/methods/enum";
 import clock from "./../Assets/clock.png";
