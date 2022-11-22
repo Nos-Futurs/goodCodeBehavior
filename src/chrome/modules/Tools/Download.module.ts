@@ -1,23 +1,31 @@
-export function dontDownloadImage() {
+export function dontDownloadImage(changeStatut: boolean = false) {
   chrome.storage.local.get("downloadStatut", (result) => {
-    const isOfflineObject = JSON.parse(result["downloadStatut"]);
-    const offlineStatut =
-      isOfflineObject !== undefined ? isOfflineObject : false;
+    const isDownloadObject = result["downloadStatut"];
+    const downloadStatus =
+      isDownloadObject !== undefined
+        ? JSON.parse(result["downloadStatut"])
+        : true;
+
+    // If a change status is passed, this means that we should update the current rule.
+    // Therefore, if the current status is true, we need to update the rule to false and then to register it in local storage.
+    // on the contrary, when we open a new tab we want the current rule to be passed to this tab without changing local storage.
+    const setDownload = changeStatut ? !downloadStatus : downloadStatus;
+
     chrome.tabs.query({}, function (tabs) {
-      let NonActiveTabsId: number[] = [];
+      let TabsId: number[] = [];
       if (tabs.length > 0) {
         tabs.map((tab) => {
           if (tab.id) {
-            NonActiveTabsId.push(tab.id);
+            TabsId.push(tab.id);
           }
         });
-        chrome.declarativeNetRequest.getSessionRules().then(async (rules) => {
-          if (rules.length > 0 && offlineStatut) {
+        chrome.declarativeNetRequest.getSessionRules().then(async () => {
+          if (setDownload) {
             try {
               chrome.declarativeNetRequest.updateSessionRules({
-                removeRuleIds: [1],
+                removeRuleIds: [2],
               });
-              setDownloadStatus(false);
+              setDownloadStatus(changeStatut, true);
             } catch (err) {
               console.log("not available to go offline", err);
             }
@@ -26,7 +34,7 @@ export function dontDownloadImage() {
               chrome.declarativeNetRequest.updateSessionRules({
                 addRules: [
                   {
-                    id: 1,
+                    id: 2,
                     action: {
                       type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
                     },
@@ -34,13 +42,13 @@ export function dontDownloadImage() {
                       resourceTypes: [
                         chrome.declarativeNetRequest.ResourceType.IMAGE,
                       ],
-                      tabIds: NonActiveTabsId,
+                      tabIds: TabsId,
                     },
                   },
                 ],
-                removeRuleIds: [1],
+                removeRuleIds: [2],
               });
-              setDownloadStatus(true);
+              setDownloadStatus(changeStatut, false);
             } catch (err) {
               console.log("not available to go offline", err);
             }
@@ -53,9 +61,11 @@ export function dontDownloadImage() {
 
 // PRIVATE METHODS
 
-const setDownloadStatus = (statut: boolean) => {
-  let newStorageInfo: any = {};
-  newStorageInfo["downloadStatut"] = JSON.stringify(statut);
+const setDownloadStatus = (changeStatut: boolean, statut: boolean) => {
+  if (changeStatut) {
+    let newStorageInfo: any = {};
+    newStorageInfo["downloadStatut"] = JSON.stringify(statut);
 
-  chrome.storage.local.set(newStorageInfo, function () {});
+    chrome.storage.local.set(newStorageInfo, function () {});
+  }
 };

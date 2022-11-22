@@ -8,7 +8,6 @@ interface ToolsProps {
 }
 
 export const Tools = ({ port, url }: ToolsProps) => {
-  const [dropDown, setDropDown] = useState<boolean>(false);
   const [imageDownloading, setImageDownloading] = useState<boolean>(false);
   const [grey, setGrey] = useState<boolean>(false);
   const [offline, setOffline] = useState<boolean>(false);
@@ -19,9 +18,12 @@ export const Tools = ({ port, url }: ToolsProps) => {
       const data = await chrome.storage.local.get([
         "browserColorStatus",
         "offlineStatut",
+        "downloadStatut"
       ]);
       const dataColorObject = JSON.parse(data["browserColorStatus"]);
       const dataOfflineObject = JSON.parse(data["offlineStatut"]);
+      const downloadStatutObject = JSON.parse(data["downloadStatut"]);
+      setImageDownloading(downloadStatutObject);
       setOffline(dataOfflineObject);
       setGrey(dataColorObject["colorStatus"]);
     };
@@ -61,13 +63,13 @@ export const Tools = ({ port, url }: ToolsProps) => {
       />
       <ToggleSwitch
         label={"Don't download image"}
-        status={imageDownloading}
+        status={!imageDownloading}
         onClick={() => {
           dontDownloadImage();
           setImageDownloading(!imageDownloading);
         }}
       />
-      <InputBox label={"Manage your time rules : "} url={url} />
+      <InputBox port={port} label={"Manage your time rules : "} url={url} />
     </div>
   );
 };
