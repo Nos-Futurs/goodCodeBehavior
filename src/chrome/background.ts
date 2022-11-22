@@ -8,8 +8,7 @@ import {
   processTabChanged,
 } from "./modules/Analysis/TimeTracking.module";
 import {
-  changeBrowserColor,
-  checkBrowserColor,
+  browserColor
 } from "./modules/Tools/Color.module";
 import { dontDownloadImage } from "./modules/Tools/Download.module";
 import { setBrowserOffline } from "./modules/Tools/Offline.module";
@@ -38,7 +37,7 @@ chrome.tabs.onCreated.addListener(function () {});
 
 chrome.tabs.onUpdated.addListener(function () {
   // check colors status
-  checkBrowserColor();
+  browserColor(false);
   dontDownloadImage(false);
   setBrowserOffline(false);
 });
@@ -50,7 +49,7 @@ chrome.runtime.onConnect.addListener(function (port) {
   port.onMessage.addListener(function (request) {
     console.log("message recieved" + request);
     if (request === "setBlackAndWhite") {
-      changeBrowserColor();
+      browserColor(true);
     }
     if (request === "ResetAnalysis") {
       clearTimeStorage();
