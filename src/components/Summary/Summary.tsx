@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { dataForAnalysis } from "../../chrome/data/data";
 import { energyAndCarbonFromBytes } from "../Analysis/EnergyCarbon/methods/carbonAnalysis.methods";
 import { formatItemTime } from "../Analysis/TimeTracking/Time.methods";
 import clock from "./../Assets/clock.png";
@@ -14,11 +15,11 @@ export const Summary = ({}: SummaryProps) => {
     const fetchData = async () => {
       const data = await chrome.storage.local.get([
         "tabsTimeObject",
-        "TabsCarbon",
+        "TabsData",
         "startingTimeAnalyseDate",
       ]);
       const dataTimeObject = JSON.parse(data["tabsTimeObject"]);
-      const dataCarbonObject = JSON.parse(data["TabsCarbon"]);
+      const dataCarbonObject = JSON.parse(data["TabsData"]);
       //const startingAnalyseDate = JSON.parse(data["startingTimeAnalyseDate"]);
       let activeTime = 0;
       for (let timeInfos in dataTimeObject) {
@@ -27,12 +28,14 @@ export const Summary = ({}: SummaryProps) => {
       let energyUsed = 0;
       for (let carbonInfos in dataCarbonObject) {
         const EnergyAndCarbon = energyAndCarbonFromBytes(
-          dataCarbonObject[carbonInfos]
+          dataCarbonObject[carbonInfos].bytes
         );
-        energyUsed = energyUsed + EnergyAndCarbon["energy"]
+        energyUsed = energyUsed + EnergyAndCarbon["energy"];
       }
       setTimeActive(activeTime);
-      setUsedEnergy(energyUsed);
+      setUsedEnergy(
+        energyUsed + dataForAnalysis.energy.kWhPerMinuteDevice * activeTime
+      );
     };
     // call the function
     fetchData();
@@ -75,14 +78,30 @@ export const Summary = ({}: SummaryProps) => {
         >
           Session usage
         </div>
-        <div style={{display: "flex", flexDirection: "row", alignItems:"center"}}>
-          <img src={clock} style={{ width: "30px", margin: "6px" }} />
-          <div style={{paddingLeft: "15px", fontSize: "15px"}}>{formatItemTime(timeActive)}</div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <img src={clock} style={{ width: "28px", margin: "6px 6px 6px 15px" }} />
+          <div style={{ paddingLeft: "15px", fontSize: "15px" }}>
+            {formatItemTime(timeActive)}
+          </div>
         </div>
 
-        <div style={{display: "flex", flexDirection: "row", alignItems:"center"}}>
-          <img src={lighting} style={{ width: "30px", margin: "6px" }} />
-          <div style={{paddingLeft: "15px", fontSize: "15px"}}>{usedEnergy.toString() + " kWh"}</div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <img src={lighting} style={{ width: "28px", margin: "6px 6px 6px 15px" }} />
+          <div style={{ paddingLeft: "15px", fontSize: "15px" }}>
+            {usedEnergy.toString() + " kWh"}
+          </div>
         </div>
       </div>
     </div>

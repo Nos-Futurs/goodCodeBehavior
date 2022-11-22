@@ -6,10 +6,6 @@ export const dataTrackingPercentage = (
   color: string;
 }[] => {
   let totalData = 0;
-  let displayedWebSite: {
-    domain: string;
-    bytes: number;
-  }[] = [];
   let minDisplayedWebSite: {
     domain: string;
     bytes: number;
@@ -17,6 +13,10 @@ export const dataTrackingPercentage = (
     domain: "start",
     bytes: 0,
   };
+  let displayedWebSite: {
+    domain: string;
+    bytes: number;
+  }[] = [minDisplayedWebSite];
 
   data.map((datum) => {
     if (displayedWebSite.length < 4) {

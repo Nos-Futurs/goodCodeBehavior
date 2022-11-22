@@ -1,6 +1,5 @@
 import { getDomainName } from "../Shared.module";
 
-
 export const headersReceivedListener = (details: any) => {
   const origin = getDomainName(
     !details.initiator ? details.url : details.initiator
@@ -17,32 +16,38 @@ export const headersReceivedListener = (details: any) => {
 
 export const clearCarbonAnalysis = () => {
   let newStorageInfo: any = {};
-  newStorageInfo["TabsCarbon"] = null;
+  newStorageInfo["TabsData"] = null;
   chrome.storage.local.set(newStorageInfo, function () {});
 };
-
-
 
 // PRIVATE METHODS
 
 /**
- * 
+ *
  * @param origin // origin url of requests
  * @param byteLength // byte length in bytes
  */
 const setByteLengthPerOrigin = (origin: string, byteLength: number) => {
-  chrome.storage.local.get(["TabsCarbon"], function (result) {
-    const tabsCarbonJSON =
-      result["TabsCarbon"] === null || JSON.stringify(result) === "{}"
+  chrome.storage.local.get(["TabsData"], function (result) {
+    const tabsDataJSON =
+      result["TabsData"] === null || JSON.stringify(result) === "{}"
         ? {}
-        : JSON.parse(result["TabsCarbon"]);
+        : JSON.parse(result["TabsData"]);
     let bytePerOrigin =
-      undefined === tabsCarbonJSON[origin]
+      undefined === tabsDataJSON[origin]
         ? 0
-        : parseInt(tabsCarbonJSON[origin]);
-    tabsCarbonJSON[origin] = bytePerOrigin + byteLength;
+        : parseInt(tabsDataJSON[origin].bytes);
+
+    let numberOfRequestsPerOrigin =
+      undefined === tabsDataJSON[origin]
+        ? 0
+        : parseInt(tabsDataJSON[origin].numberOfRequests);
+    tabsDataJSON[origin] = {
+      bytes: bytePerOrigin + byteLength,
+      numberOfRequests: numberOfRequestsPerOrigin + 1,
+    };
     let newStorageInfo: any = {};
-    newStorageInfo["TabsCarbon"] = JSON.stringify(tabsCarbonJSON);
+    newStorageInfo["TabsData"] = JSON.stringify(tabsDataJSON);
 
     chrome.storage.local.set(newStorageInfo, function () {});
   });

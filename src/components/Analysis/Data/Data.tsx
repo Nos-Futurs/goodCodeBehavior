@@ -22,16 +22,16 @@ export const DataTracking = ({ port }: EnergyCarbonTrackingProps) => {
     // declare the data fetching function
     const fetchData = async () => {
       const data = await chrome.storage.local.get([
-        "TabsCarbon",
+        "TabsData",
         "startingTimeAnalyseDate",
       ]);
-      const dataObject = JSON.parse(data["TabsCarbon"]);
+      const dataObject = JSON.parse(data["TabsData"]);
       const startingAnalyseDate = JSON.parse(data["startingTimeAnalyseDate"]);
       let dataArray = [];
       for (let dataINfo in dataObject) {
         dataArray.push({
           domain: dataINfo,
-          bytes: parseInt(dataObject[dataINfo]),
+          bytes: parseInt(dataObject[dataINfo].bytes),
         });
       }
       const percentageArray = dataTrackingPercentage(dataArray);

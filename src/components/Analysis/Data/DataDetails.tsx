@@ -47,14 +47,16 @@ export const DataDetails = ({
       <div>
         {timeTrackedDescending.map(
           (item: { domain: string; bytes: number }) => {
-            return (
-              <div style={{ paddingTop: "3px" }}>
-                {item.domain +
-                  " : " +
-                  Math.floor(item.bytes / (1000 * 1000)) +
-                  " Mb"}
-              </div>
-            );
+            if (Math.floor(item.bytes / (1000 * 1000)) > 0) {
+              return (
+                <div style={{ paddingTop: "3px" }}>
+                  {item.domain +
+                    " : " +
+                    Math.floor(item.bytes / (1000 * 1000)) +
+                    " Mb"}
+                </div>
+              );
+            }
           }
         )}
       </div>

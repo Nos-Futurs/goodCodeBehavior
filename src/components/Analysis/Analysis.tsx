@@ -55,7 +55,7 @@ export const Analysis = ({port}: AnalysisProps) => {
           </div>
           {type === AnalysisTypeEnum.TIME && <TimeTracking port={port}/>}
           {type === AnalysisTypeEnum.DATA && <DataTracking port={port}/>}
-          {type === AnalysisTypeEnum.ENERGY && <EnergyCarbonTracking port={port} dataType={type}/>}
+          {type === AnalysisTypeEnum.ENERGY && <EnergyCarbonTracking port={port}/>}
         </div>
       )}
     </div>
