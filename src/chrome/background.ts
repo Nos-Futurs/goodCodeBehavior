@@ -1,7 +1,7 @@
 import {
   clearCarbonAnalysis,
   headersReceivedListener,
-} from "./modules/Analysis/Carbon.module";
+} from "./modules/Analysis/Data.module";
 import {
   clearTimeStorage,
   onTabTrack,

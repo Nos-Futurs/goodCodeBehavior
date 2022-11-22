@@ -15,11 +15,13 @@ const carbonIntensityFactorIngCO2PerKWh = {
   'defaultLocation': 519
 };
 
+const lightbulbPowerInWatt = 100
+
 export const dataForAnalysis = {
     "energy":{
         kWhPerByteDataCenter,
         kWhPerByteNetwork,
-        kWhPerMinuteDevice
+        kWhPerMinuteDevice,
     }, 
     "carbonIntensity": {
         "byRegion": {
@@ -29,5 +31,8 @@ export const dataForAnalysis = {
             GESgCO2ForOneKmByCar,
             GESgCO2ForOneChargedSmartphone
         }
+    }, 
+    "examples": {
+        lightbulbPowerInWatt
     }
 }
