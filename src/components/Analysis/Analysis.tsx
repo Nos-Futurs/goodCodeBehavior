@@ -4,7 +4,6 @@ import { CategoryHeader } from "../Shared/categoryHeader";
 import { AnalysisTypeEnum } from "../Shared/methods/enum";
 import clock from "./../Assets/clock.png";
 import co2_cloud from "./../Assets/co2-cloud.png";
-import lighting from "./../Assets/lighting.png";
 import data from "./../Assets/data.png";
 import { EnergyCarbonTracking } from "./EnergyCarbon/EnergyCarbon";
 import { TimeTracking } from "./TimeTracking/TimeTracking";
