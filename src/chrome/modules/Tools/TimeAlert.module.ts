@@ -2,6 +2,7 @@ const timeRules = "timeRulesObject";
 
 // Create new time rule
 export function createNewTimeRule(domain: string, time: number) {
+  createAlarm();
   chrome.storage.local.get([timeRules], function (result) {
     const timeRulesJSON = result[timeRules];
     console.log(timeRulesJSON);
@@ -16,11 +17,11 @@ export function createNewTimeRule(domain: string, time: number) {
     newTabTimeObject[timeRules] = rulesTimeString;
     chrome.storage.local.set(newTabTimeObject, function () {});
   });
-  createAlarm()
 }
 
 // Delete time rule
 export function DeleteTimeRule(domain: string) {
+  createAlarm();
   chrome.storage.local.get([timeRules], function (result) {
     const timeRulesJSON = result[timeRules];
     console.log(timeRulesJSON);
@@ -36,16 +37,21 @@ export function DeleteTimeRule(domain: string) {
       chrome.storage.local.set(newTabTimeObject, function () {});
     }
   });
-  createAlarm()
 }
 
 export const createAlarm = () => {
-  chrome.notifications.create("1", {
-    type: "basic",
-    iconUrl: chrome.runtime.getURL("images/logo.png"),
-    title: "Time for cake!",
-    message: "Something something cake",
-  });
+  chrome.notifications.create(
+    "test",
+    {
+      type: "basic",
+      iconUrl: chrome.runtime.getURL("images/logo.png"),
+      title: "Time for cake!",
+      message: "Something something cake",
+    },
+    function (result) {
+      console.log(result);
+    }
+  );
 };
 
 // PRIVATE FUNCTIONS
