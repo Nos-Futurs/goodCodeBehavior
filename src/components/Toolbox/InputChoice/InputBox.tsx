@@ -2,6 +2,7 @@ import React from "react";
 import { ButtonIcon } from "../../Shared/Buttons/ButtonIcon";
 
 interface MySwitchProps {
+  port: chrome.runtime.Port;
   disabled?: boolean;
   label: string;
   url: string;
@@ -10,12 +11,18 @@ interface MySwitchProps {
 }
 
 function InputBox({
+  port,
   disabled = false,
   onClickFirst = () => {},
   onClickSecond = () => {},
   url,
   label,
 }: MySwitchProps) {
+
+  const Test = () => {
+    port.postMessage("test");
+  };
+
   return (
     <div
       style={{
@@ -54,7 +61,7 @@ function InputBox({
           flexDirection: "row",
         }}
       >
-        <ButtonIcon title="Add rule" onClick={onClickFirst} />
+        <ButtonIcon title="Add rule" onClick={Test} />
         <ButtonIcon title="See rules" onClick={onClickSecond} />
       </div>
     </div>

@@ -2,14 +2,17 @@ import {
   clearCarbonAnalysis,
   headersReceivedListener,
 } from "./modules/Analysis/Carbon.module";
-import { changeBrowserColor, checkBrowserColor } from "./modules/Tools/Color.module";
-import { setBrowserOffline } from "./modules/Tools/Offline.module";
 import {
   clearTimeStorage,
   onTabTrack,
   processTabChanged,
 } from "./modules/Analysis/TimeTracking.module";
-import { dontDownloadImage } from "./modules/Tools/Download.module";
+import {
+  changeBrowserColor,
+  checkBrowserColor,
+} from "./modules/Tools/Color.module";
+import { dontDownloadImage, dontDownloadImageOnTabUpdate } from "./modules/Tools/Download.module";
+import { setBrowserOffline, setBrowserOfflineOnTabUpdate } from "./modules/Tools/Offline.module";
 
 // starts when you are on chrome window
 chrome.windows.onFocusChanged.addListener(function (windowId: number) {
@@ -23,7 +26,7 @@ chrome.windows.onFocusChanged.addListener(function (windowId: number) {
 
 // update time tracking when you act on tabs
 chrome.tabs.onActivated.addListener(function () {
-  onTabTrack;
+  onTabTrack();
 });
 
 chrome.tabs.onCreated.addListener(function () {});
@@ -31,6 +34,8 @@ chrome.tabs.onCreated.addListener(function () {});
 chrome.tabs.onUpdated.addListener(function () {
   // check colors status
   checkBrowserColor();
+  dontDownloadImageOnTabUpdate();
+  setBrowserOfflineOnTabUpdate();
 });
 
 /**
@@ -46,11 +51,11 @@ chrome.runtime.onConnect.addListener(function (port) {
       clearTimeStorage();
       clearCarbonAnalysis();
     }
-    if (msg === "SetUnactiveTabsOffline"){
-      setBrowserOffline()
+    if (msg === "SetUnactiveTabsOffline") {
+      setBrowserOffline();
     }
-    if (msg === "dontDownloadImage"){
-      dontDownloadImage()
+    if (msg === "dontDownloadImage") {
+      dontDownloadImage();
     }
   });
 });

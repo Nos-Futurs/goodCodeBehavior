@@ -1,23 +1,23 @@
 export function dontDownloadImage() {
   chrome.storage.local.get("downloadStatut", (result) => {
-    const isOfflineObject = JSON.parse(result["downloadStatut"]);
-    const offlineStatut =
-      isOfflineObject !== undefined ? isOfflineObject : false;
+    const isDownloadObject = result["downloadStatut"];
+    const downloadStatus =
+      isDownloadObject !== undefined ? JSON.parse(result["downloadStatut"]) : true;
     chrome.tabs.query({}, function (tabs) {
-      let NonActiveTabsId: number[] = [];
+      let TabsId: number[] = [];
       if (tabs.length > 0) {
         tabs.map((tab) => {
           if (tab.id) {
-            NonActiveTabsId.push(tab.id);
+            TabsId.push(tab.id);
           }
         });
-        chrome.declarativeNetRequest.getSessionRules().then(async (rules) => {
-          if (rules.length > 0 && offlineStatut) {
+        chrome.declarativeNetRequest.getSessionRules().then(async () => {
+          if (!downloadStatus) {
             try {
               chrome.declarativeNetRequest.updateSessionRules({
-                removeRuleIds: [1],
+                removeRuleIds: [2],
               });
-              setDownloadStatus(false);
+              setDownloadStatus(true);
             } catch (err) {
               console.log("not available to go offline", err);
             }
@@ -26,7 +26,7 @@ export function dontDownloadImage() {
               chrome.declarativeNetRequest.updateSessionRules({
                 addRules: [
                   {
-                    id: 1,
+                    id: 2,
                     action: {
                       type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
                     },
@@ -34,13 +34,65 @@ export function dontDownloadImage() {
                       resourceTypes: [
                         chrome.declarativeNetRequest.ResourceType.IMAGE,
                       ],
-                      tabIds: NonActiveTabsId,
+                      tabIds: TabsId,
                     },
                   },
                 ],
-                removeRuleIds: [1],
+                removeRuleIds: [2],
               });
-              setDownloadStatus(true);
+              setDownloadStatus(false);
+            } catch (err) {
+              console.log("not available to go offline", err);
+            }
+          }
+        });
+      }
+    });
+  });
+}
+
+export function dontDownloadImageOnTabUpdate() {
+  chrome.storage.local.get("downloadStatut", (result) => {
+    const isDownloadObject = result["downloadStatut"];
+    const downloadStatus =
+      isDownloadObject !== undefined ? JSON.parse(result["downloadStatut"]) : true;
+    chrome.tabs.query({}, function (tabs) {
+      let TabsId: number[] = [];
+      if (tabs.length > 0) {
+        tabs.map((tab) => {
+          if (tab.id) {
+            TabsId.push(tab.id);
+          }
+        });
+        console.log(TabsId);
+        chrome.declarativeNetRequest.getSessionRules().then(async () => {
+          if (downloadStatus) {
+            try {
+              chrome.declarativeNetRequest.updateSessionRules({
+                removeRuleIds: [2],
+              });
+            } catch (err) {
+              console.log("not available to go offline", err);
+            }
+          } else {
+            try {
+              chrome.declarativeNetRequest.updateSessionRules({
+                addRules: [
+                  {
+                    id: 2,
+                    action: {
+                      type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
+                    },
+                    condition: {
+                      resourceTypes: [
+                        chrome.declarativeNetRequest.ResourceType.IMAGE,
+                      ],
+                      tabIds: TabsId,
+                    },
+                  },
+                ],
+                removeRuleIds: [2],
+              });
             } catch (err) {
               console.log("not available to go offline", err);
             }
