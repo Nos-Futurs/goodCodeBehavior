@@ -16,7 +16,7 @@ export function createNewTimeRule(domain: string, time: number) {
     newTabTimeObject[timeRules] = rulesTimeString;
     chrome.storage.local.set(newTabTimeObject, function () {});
   });
-  showTimeRules
+  createAlarm()
 }
 
 // Delete time rule
@@ -28,19 +28,29 @@ export function DeleteTimeRule(domain: string) {
     if (timeRulesJSON !== undefined) {
       timeRulesObject = JSON.parse(timeRulesJSON);
     }
-    if (timeRulesObject[domain]){
-      delete timeRulesObject[domain]
+    if (timeRulesObject[domain]) {
+      delete timeRulesObject[domain];
       const rulesTimeString = JSON.stringify(timeRulesObject);
       let newTabTimeObject: any = {};
       newTabTimeObject[timeRules] = rulesTimeString;
       chrome.storage.local.set(newTabTimeObject, function () {});
     }
   });
-  showTimeRules()
+  createAlarm()
 }
 
+export const createAlarm = () => {
+  chrome.notifications.create("1", {
+    type: "basic",
+    iconUrl: chrome.runtime.getURL("images/logo.png"),
+    title: "Time for cake!",
+    message: "Something something cake",
+  });
+};
+
+// PRIVATE FUNCTIONS
 const showTimeRules = () => {
   chrome.storage.local.get([timeRules], function (result) {
-    console.log(result)
+    console.log(result);
   });
-}
+};
