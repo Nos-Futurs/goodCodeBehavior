@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IconButton } from "../../Shared/Buttons/IconButton";
 import { AnalysisTypeEnum } from "../../Shared/methods/enum";
-import { ChartBlock } from "../../Shared/PieChart/ChartBlock";
-import details from "./../../Assets/details.png";
-import infos from "./../../Assets/infos.png";
-import { CarbonDetails } from "./EnergyCarbonDetails";
 import {
   carbonTrackingPercentage,
   energyAndCarbonFromBytes,
@@ -69,49 +64,32 @@ export const EnergyCarbonTracking = ({
   };
 
   return (
-    <div style={{ flexDirection: "column" }}>
+    <div
+      style={{
+        flexDirection: "column",
+        marginTop: "10px",
+        marginBottom: "30px",
+        display: "flex",
+      }}
+    >
       <div
         style={{
-          marginTop: "10px",
-          marginBottom: "30px",
+          margin: "10px",
+          padding: "15px",
+          flexDirection: "row",
           display: "flex",
-          flexDirection: "column",
+          alignItems: "center",
+          border: "solid",
+          borderWidth: "2px",
+          borderColor: "rgba(58, 112, 39, 1)",
+          borderRadius: "10px",
         }}
       >
-        <ChartBlock
-          chartData={
-            dataType === AnalysisTypeEnum.ENERGY
-              ? energyChartData
-              : dataType === AnalysisTypeEnum.DATA
-              ? dataChartData
-              : carbonChartData
-          }
-        />
-        <div
-          style={{
-            margin: "0px 15px 15px 15px",
-            display: "flex",
-            flexDirection: "row",
-          }}
-        >
-          <IconButton
-            title={"Detail"}
-            icon={details}
-            onClick={() => {
-              setShwoDetails(!shwoDetails);
-            }}
-          />
-          <IconButton title={"Infos"} icon={infos} onClick={() => {}} />
-        </div>
+        <div>Energy used for data consumption</div>
+        <div>Energy used for chrome usage</div>
+        <div>Equivalent in CO2</div>
+        <div>Comparison</div>
       </div>
-
-      {shwoDetails && (
-        <CarbonDetails
-          port={port}
-          startDate={startDate}
-          dataTracked={allDataTracked}
-        />
-      )}
     </div>
   );
 };

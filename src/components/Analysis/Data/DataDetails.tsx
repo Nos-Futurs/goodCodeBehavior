@@ -4,30 +4,26 @@ const setDecreasingOrder = (
   dataTracked: {
     domain: string;
     bytes: number;
-    energy: number;
-    carbon: number;
   }[]
 ) => {
   dataTracked.sort((a, b) => b.bytes - a.bytes);
   return dataTracked;
 };
 
-interface CarbonDetailsProps {
+interface DataDetailsProps {
   port: chrome.runtime.Port;
   startDate: Date | null;
   dataTracked: {
     domain: string;
     bytes: number;
-    energy: number;
-    carbon: number;
   }[];
 }
 
-export const CarbonDetails = ({
+export const DataDetails = ({
   port,
   dataTracked,
   startDate,
-}: CarbonDetailsProps) => {
+}: DataDetailsProps) => {
   const eraseTimeData = () => {
     port.postMessage("ResetAnalysis");
   };
@@ -50,14 +46,14 @@ export const CarbonDetails = ({
       </div>
       <div>
         {timeTrackedDescending.map(
-          (item: {
-            domain: string;
-            bytes: number;
-            energy: number;
-            carbon: number;
-          }) => {
+          (item: { domain: string; bytes: number }) => {
             return (
-              <div style={{ paddingTop: "3px" }}>{item.domain + " : " + Math.floor(item.bytes/1000) + " Mb"}</div>
+              <div style={{ paddingTop: "3px" }}>
+                {item.domain +
+                  " : " +
+                  Math.floor(item.bytes / (1000 * 1000)) +
+                  " Mb"}
+              </div>
             );
           }
         )}

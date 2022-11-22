@@ -15,7 +15,6 @@ export const TimeTrackingChart = ({chartData}: ChartProps) => {
         fontSize: "5px",
         fontWeight: "bold",
       })}
-      animate={true}
     />
   );
 };
