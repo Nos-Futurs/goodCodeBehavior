@@ -15,6 +15,7 @@ import { setBrowserOffline } from "./modules/Tools/Offline.module";
 import {
   createNewTimeRule,
   DeleteTimeRule,
+  notificationSending,
 } from "./modules/Tools/TimeAlert.module";
 
 // starts when you are on chrome window
@@ -69,6 +70,14 @@ chrome.runtime.onConnect.addListener(function (port) {
     }
   });
 });
+
+
+chrome.alarms.onAlarm.addListener(function(alarm) {
+  if (alarm.name === "timeNotification") {
+    notificationSending();
+  }
+});
+
 
 chrome.webRequest.onCompleted.addListener(
   function (event: any) {
