@@ -19,7 +19,8 @@
       "webRequest", 
       "*://*.google.com/", 
       "declarativeNetRequest",
-      "notifications"
+      "notifications",
+      "alarms"
     ],
     "host_permissions": ["http://*/*", "https://*/*", "chrome://"],
     "icons": {
