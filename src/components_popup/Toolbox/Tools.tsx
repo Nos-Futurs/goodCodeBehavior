@@ -46,7 +46,7 @@ export const Tools = ({ port, url }: ToolsProps) => {
   return (
     <div style={{ marginTop: "15px" }}>
       <ToggleSwitch
-        label={"Set black and white"}
+        label={"Set tabs in black and white"}
         status={!grey}
         onClick={() => {
           blackAndWhiteBackground();
@@ -62,7 +62,7 @@ export const Tools = ({ port, url }: ToolsProps) => {
         }}
       />
       <ToggleSwitch
-        label={"Don't download image"}
+        label={"Avoid downloading images"}
         status={!imageDownloading}
         onClick={() => {
           dontDownloadImage();

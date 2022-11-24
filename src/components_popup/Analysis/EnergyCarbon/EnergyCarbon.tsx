@@ -96,16 +96,14 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
         />
         <div style={{ paddingTop: "20px" }}>
           <ItemTracking
-            text={"Equivalent to a lightbulb during"}
+            text={"Equivalent to a light bulb during"}
             number={Math.floor(
               ((energyEquivalent +
                 dataForAnalysis.energy.kWhPerMinuteDevice * time) /
-                (dataForAnalysis.examples.lightbulbPowerInWatt / 1000)) *
-                60
+                (dataForAnalysis.examples.lightbulbPowerInWatt / 1000))
             )}
-            toFixNumber={0}
             icon={lightbulb}
-            measures={"min"}
+            measures={"hours"}
           />
         </div>
       </div>

@@ -25,7 +25,7 @@ export const IconButton = ({ icon, title, onClick }: IconButtonProps) => {
       }}
     >
       {icon ? (
-        <img src={icon} style={{ paddingRight: "10px", paddingLeft: "13px" }} />
+        <img src={icon} style={{ paddingRight: "10px", paddingLeft: "13px",  width:"15px"  }} />
       ) : (
         <></>
       )}
@@ -34,6 +34,7 @@ export const IconButton = ({ icon, title, onClick }: IconButtonProps) => {
           padding: "6px",
           paddingLeft: "10px",
           textTransform: "uppercase",
+          paddingRight: "13px",
           fontWeight: "bold",
         }}
       >

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IconButton } from "../../Shared/Buttons/IconButton";
+import { InfosButton } from "../../Shared/Buttons/InfosButton";
+import { OnlyIconButton } from "../../Shared/Buttons/OnlyIconButton";
 import { ChartBlock } from "../../Shared/PieChart/ChartBlock";
 import details from "./../../Assets/details.png";
 import infos from "./../../Assets/infos.png";
@@ -66,7 +68,7 @@ export const TimeTracking = ({ port }: TimeTrackingProps) => {
               setShwoDetails(!shwoDetails);
             }}
           />
-          <IconButton title={"Infos"} icon={infos} onClick={() => {}} />
+          <InfosButton onClick={() => {}} />
         </div>
       </div>
 

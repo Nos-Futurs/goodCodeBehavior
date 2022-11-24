@@ -17,7 +17,7 @@ export const ExtensionHeader = ({}: ExtensionHeaderProps) => {
       }}
     >
       <img src={fake_logo} style={{ paddingRight: "15px", width: "60px" }} />
-      <text>GCB - Good Code Behaviour</text>
+      <text>Good Code Behaviour</text>
     </header>
   );
 };

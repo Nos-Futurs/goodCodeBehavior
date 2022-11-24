@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ButtonIcon } from "../../Shared/Buttons/ButtonIcon";
+import { InfosButton } from "../../Shared/Buttons/InfosButton";
 import { OnlyIconButton } from "../../Shared/Buttons/OnlyIconButton";
 import trashCan from "./../../assets/trash-can.png";
 
@@ -106,6 +107,7 @@ function InputBox({ port, url, label }: MySwitchProps) {
             setAction("seeRules");
           }}
         />
+        <InfosButton marginTop={"0px"} onClick={() => {}} />
       </div>
       {seeRules &&
         rules.map((rule) => (
