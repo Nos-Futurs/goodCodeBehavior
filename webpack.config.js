@@ -8,7 +8,7 @@ module.exports = {
   mode: prod ? 'production' : 'development',
   entry: {
     main: "./src/index.tsx",
-    background: './src/chrome/background.ts'
+    background: './src/chrome_background/background.ts'
   },
   output: {
     path: __dirname + '/build',

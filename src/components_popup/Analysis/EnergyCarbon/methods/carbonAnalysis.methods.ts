@@ -1,4 +1,4 @@
-import { dataForAnalysis } from "../../../../chrome/data/data";
+import { dataForAnalysis } from "../../../../chrome_background/data/data";
 
 export const energyAndCarbonFromBytes = (
   bytes: number

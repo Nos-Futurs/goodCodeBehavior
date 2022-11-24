@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { dataForAnalysis } from "../../../chrome/data/data";
+import { dataForAnalysis } from "../../../chrome_background/data/data";
 import co2Cloud from "./../../Assets/co2-cloud.png";
 import dataIcon from "./../../Assets/data.png";
 import lightbulb from "./../../Assets/lightbulb.png";

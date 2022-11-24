@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getDomainName } from "../../chrome/modules/Shared.module";
+import { getDomainName } from "../../chrome_background/modules/Shared.module";
 import { CategoryHeader } from "../Shared/categoryHeader";
 import { Tools } from "./Tools";
 

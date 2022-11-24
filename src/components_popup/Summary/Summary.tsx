@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { dataForAnalysis } from "../../chrome/data/data";
+import { dataForAnalysis } from "../../chrome_background/data/data";
 import { energyAndCarbonFromBytes } from "../Analysis/EnergyCarbon/methods/carbonAnalysis.methods";
 import { formatItemTime } from "../Analysis/TimeTracking/Time.methods";
 import clock from "./../Assets/clock.png";
