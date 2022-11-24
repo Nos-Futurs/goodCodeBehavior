@@ -5,6 +5,7 @@ interface ItemTrackingProps {
   icon: string;
   text: string;
   measures?: string;
+  toFixNumber?: number;
 }
 
 export const ItemTracking = ({
@@ -12,6 +13,7 @@ export const ItemTracking = ({
   number,
   icon,
   measures,
+  toFixNumber,
 }: ItemTrackingProps) => {
   return (
     <div
@@ -24,7 +26,9 @@ export const ItemTracking = ({
     >
       <img src={icon} style={{ paddingRight: "10px", width: "20px" }} />
       <div style={{ paddingRight: "10px", fontSize: "15px" }}>{text}</div>
-      <div style={{ fontWeight: "bold", fontSize: "15px" }}>{number}</div>
+      <div style={{ fontWeight: "bold", fontSize: "15px" }}>
+        {number.toFixed(toFixNumber ? toFixNumber : 2)}
+      </div>
       {measures && (
         <div style={{ paddingLeft: "10px", fontSize: "15px" }}>{measures}</div>
       )}

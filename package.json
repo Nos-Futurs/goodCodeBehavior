@@ -1,5 +1,5 @@
 {
-  "name": "chrome_extension",
+  "name": "good_code_behaviour",
   "version": "0.1.0",
   "license": "GPL-3.0-or-later",
   "description": "Chrome plugin to monitor your internet usage.",

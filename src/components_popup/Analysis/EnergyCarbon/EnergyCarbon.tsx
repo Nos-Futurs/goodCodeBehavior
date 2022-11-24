@@ -103,6 +103,7 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
                 (dataForAnalysis.examples.lightbulbPowerInWatt / 1000)) *
                 60
             )}
+            toFixNumber={0}
             icon={lightbulb}
             measures={"min"}
           />

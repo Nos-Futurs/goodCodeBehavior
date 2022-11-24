@@ -1,8 +1,9 @@
 {
-    "name": "GCB Extension",
-    "description": "Extension to keep track of your internet usage",
+    "name": "Good Code Behaviour",
+    "description": "Chrome plugin to monitor your internet usage.",
     "version": "1.0",
     "manifest_version": 3,
+    "author":"Paul PEHARPRE",
     "action": {
       "default_popup": "index.html",
       "default_title": "Open the popup"

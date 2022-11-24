@@ -85,7 +85,10 @@ export const Summary = ({}: SummaryProps) => {
             alignItems: "center",
           }}
         >
-          <img src={clock} style={{ width: "28px", margin: "6px 6px 6px 15px" }} />
+          <img
+            src={clock}
+            style={{ width: "28px", margin: "6px 6px 6px 15px" }}
+          />
           <div style={{ paddingLeft: "15px", fontSize: "15px" }}>
             {formatItemTime(timeActive)}
           </div>
@@ -98,9 +101,12 @@ export const Summary = ({}: SummaryProps) => {
             alignItems: "center",
           }}
         >
-          <img src={lighting} style={{ width: "28px", margin: "6px 6px 6px 15px" }} />
+          <img
+            src={lighting}
+            style={{ width: "28px", margin: "6px 6px 6px 15px" }}
+          />
           <div style={{ paddingLeft: "15px", fontSize: "15px" }}>
-            {usedEnergy.toString() + " kWh"}
+            {usedEnergy.toFixed(2).toString() + " kWh"}
           </div>
         </div>
       </div>
