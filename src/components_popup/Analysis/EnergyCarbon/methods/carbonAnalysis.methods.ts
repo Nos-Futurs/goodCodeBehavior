@@ -10,6 +10,6 @@ export const energyAndCarbonFromBytes = (
   const carbon =
     energy *
     dataForAnalysis.carbonIntensity.byRegion.carbonIntensityFactorIngCO2PerKWh
-      .defaultLocation;
+      .global;
   return { energy, carbon };
 };

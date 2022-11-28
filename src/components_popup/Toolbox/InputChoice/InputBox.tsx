@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { SimpleModal } from "../../Modal/Modal";
+import { useModalContext } from "../../Modal/modalContext";
 import { ButtonIcon } from "../../Shared/Buttons/ButtonIcon";
 import { InfosButton } from "../../Shared/Buttons/InfosButton";
 import { OnlyIconButton } from "../../Shared/Buttons/OnlyIconButton";
 import trashCan from "./../../assets/trash-can.png";
+import { TimeRulesInfos } from "./TimeRulesInfos";
 
 interface MySwitchProps {
   port: chrome.runtime.Port;
@@ -16,6 +19,7 @@ function InputBox({ port, url, label }: MySwitchProps) {
   const [seeRules, setSeeRules] = useState(false);
   const [rules, setRules] = useState<{ domain: string; text: string }[]>([]);
   const [action, setAction] = useState("");
+  const { openModal } = useModalContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,7 +111,10 @@ function InputBox({ port, url, label }: MySwitchProps) {
             setAction("seeRules");
           }}
         />
-        <InfosButton marginTop={"0px"} onClick={() => {}} />
+        <InfosButton marginTop={"0px"} onClick={() => openModal()} />
+        <SimpleModal>
+          <TimeRulesInfos />
+        </SimpleModal>
       </div>
       {seeRules &&
         rules.map((rule) => (

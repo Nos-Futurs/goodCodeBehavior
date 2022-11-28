@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { SimpleModal } from "../../Modal/Modal";
+import { useModalContext } from "../../Modal/modalContext";
 import { IconButton } from "../../Shared/Buttons/IconButton";
 import { InfosButton } from "../../Shared/Buttons/InfosButton";
 import { OnlyIconButton } from "../../Shared/Buttons/OnlyIconButton";
@@ -6,6 +8,7 @@ import { ChartBlock } from "../../Shared/PieChart/ChartBlock";
 import details from "./../../Assets/details.png";
 import infos from "./../../Assets/infos.png";
 import { DataDetails } from "./DataDetails";
+import { DataInfos } from "./DataInfos";
 import { dataTrackingPercentage } from "./methods/dataAnalysis.methods";
 
 interface EnergyCarbonTrackingProps {
@@ -19,6 +22,7 @@ export const DataTracking = ({ port }: EnergyCarbonTrackingProps) => {
   const [dataChartData, setDataChartData] = useState<
     { title: string; value: number; color: string }[]
   >([]);
+  const { openModal } = useModalContext();
 
   useEffect(() => {
     // declare the data fetching function
@@ -70,7 +74,12 @@ export const DataTracking = ({ port }: EnergyCarbonTrackingProps) => {
               setShwoDetails(!shwoDetails);
             }}
           />
-          <InfosButton onClick={() => {}} />
+          <div>
+            <InfosButton onClick={() => openModal()} />
+            <SimpleModal>
+              <DataInfos />
+            </SimpleModal>
+          </div>
         </div>
       </div>
 
