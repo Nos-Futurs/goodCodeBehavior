@@ -1,9 +1,9 @@
 {
     "name": "Good Code Behaviour",
     "description": "Chrome plugin to monitor your internet usage.",
-    "version": "1.0",
+    "version": "0.1",
     "manifest_version": 3,
-    "author":"Paul PEHARPRE",
+    "author":"Paul PEHARPRE (Nos Futurs)",
     "action": {
       "default_popup": "index.html",
       "default_title": "Open the popup"
