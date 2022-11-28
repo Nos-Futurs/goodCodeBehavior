@@ -9,9 +9,10 @@ export function getDomainName(url: string) {
 export function storageObject(objectJSON: string, returnObject?: any) {
   if (
     JSON.stringify(objectJSON) !== "{}" &&
-    JSON.stringify(objectJSON) !== undefined &&
+    objectJSON !== undefined &&
     JSON.stringify(objectJSON) !== "undefined" &&
-    JSON.stringify(objectJSON) !== null
+    JSON.stringify(objectJSON) !== 'null' &&
+    objectJSON !== null
   ) {
     return JSON.parse(objectJSON);
   }

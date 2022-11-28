@@ -32,15 +32,14 @@ export const clearCarbonAnalysis = () => {
 const setByteLengthPerOrigin = (origin: string, byteLength: number) => {
   chrome.storage.local.get(["TabsData"], function (result) {
     const tabsDataJSON = storageObject(result["TabsData"]);
-    let bytePerOrigin =
-      undefined === tabsDataJSON[origin]
-        ? 0
-        : parseInt(tabsDataJSON[origin].bytes);
-
-    let numberOfRequestsPerOrigin =
-      undefined === tabsDataJSON[origin]
-        ? 0
-        : parseInt(tabsDataJSON[origin].numberOfRequests);
+    let bytePerOrigin = 0;
+    let numberOfRequestsPerOrigin = 0;
+    if (undefined !== tabsDataJSON[origin]) {
+      bytePerOrigin = parseInt(tabsDataJSON[origin].bytes);
+      numberOfRequestsPerOrigin = parseInt(
+        tabsDataJSON[origin].numberOfRequests
+      );
+    }
     tabsDataJSON[origin] = {
       bytes: bytePerOrigin + byteLength,
       numberOfRequests: numberOfRequestsPerOrigin + 1,
