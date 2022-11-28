@@ -18,12 +18,11 @@
       "storage", 
       "declarativeContent", 
       "webRequest", 
-      "*://*.google.com/", 
       "declarativeNetRequest",
       "notifications",
       "alarms"
     ],
-    "host_permissions": ["http://*/*", "https://*/*", "chrome://"],
+    "host_permissions": ["http://*/*", "https://*/*"],
     "icons": {
       "16": "images/logo.png",
       "48": "images/logo.png",

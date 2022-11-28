@@ -4,10 +4,8 @@ import { SimpleModal } from "../../Modal/Modal";
 import { useModalContext } from "../../Modal/modalContext";
 import { IconButton } from "../../Shared/Buttons/IconButton";
 import { InfosButton } from "../../Shared/Buttons/InfosButton";
-import { OnlyIconButton } from "../../Shared/Buttons/OnlyIconButton";
 import { ChartBlock } from "../../Shared/PieChart/ChartBlock";
 import details from "./../../Assets/details.png";
-import infos from "./../../Assets/infos.png";
 import { DataDetails } from "./DataDetails";
 import { DataInfos } from "./DataInfos";
 import { dataTrackingPercentage } from "./methods/dataAnalysis.methods";
@@ -33,7 +31,9 @@ export const DataTracking = ({ port }: EnergyCarbonTrackingProps) => {
         "startingTimeAnalyseDate",
       ]);
       const dataObject = storageObject(data["TabsData"]);
-      const startingAnalyseDate = storageObject(data["startingTimeAnalyseDate"]);
+      const startingAnalyseDate = storageObject(
+        data["startingTimeAnalyseDate"]
+      );
       let dataArray = [];
       for (let dataINfo in dataObject) {
         dataArray.push({

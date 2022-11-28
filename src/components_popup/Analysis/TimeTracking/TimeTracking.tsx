@@ -30,7 +30,9 @@ export const TimeTracking = ({ port }: TimeTrackingProps) => {
         "startingTimeAnalyseDate",
       ]);
       const dataObject = storageObject(data["tabsTimeObject"]);
-      const startingAnalyseDate = storageObject(data["startingTimeAnalyseDate"]);
+      const startingAnalyseDate = storageObject(
+        data["startingTimeAnalyseDate"]
+      );
       let dataArray = [];
       for (let timeInfos in dataObject) {
         dataArray.push({
