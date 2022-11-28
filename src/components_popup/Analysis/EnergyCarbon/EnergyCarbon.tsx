@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { dataForAnalysis } from "../../../chrome_background/data/data";
+import { SimpleModal } from "../../Modal/Modal";
+import { useModalContext } from "../../Modal/modalContext";
+import { InfosButton } from "../../Shared/Buttons/InfosButton";
 import co2Cloud from "./../../Assets/co2-cloud.png";
 import dataIcon from "./../../Assets/data.png";
 import lightbulb from "./../../Assets/lightbulb.png";
 import lighting from "./../../Assets/lighting.png";
+import { CarbonInfos } from "./CarbonInfos";
 import { ItemTracking } from "./Item";
 import { energyAndCarbonFromBytes } from "./methods/carbonAnalysis.methods";
 
@@ -16,6 +20,7 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
   const [time, setTime] = useState(0);
   const [energyEquivalent, setEnergyEquivalent] = useState(0);
   const [CO2Equivalent, setCO2Equivalent] = useState(0);
+  const { openModal } = useModalContext();
 
   useEffect(() => {
     // declare the data fetching function
@@ -55,7 +60,7 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
     <div
       style={{
         marginTop: "10px",
-        marginBottom: "30px",
+        marginBottom: "40px",
       }}
     >
       <div
@@ -90,7 +95,7 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
             dataForAnalysis.energy.kWhPerMinuteDevice *
               time *
               dataForAnalysis.carbonIntensity.byRegion
-                .carbonIntensityFactorIngCO2PerKWh.defaultLocation
+                .carbonIntensityFactorIngCO2PerKWh.global
           }
           icon={co2Cloud}
         />
@@ -98,14 +103,20 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
           <ItemTracking
             text={"Equivalent to a light bulb during"}
             number={Math.floor(
-              ((energyEquivalent +
+              (energyEquivalent +
                 dataForAnalysis.energy.kWhPerMinuteDevice * time) /
-                (dataForAnalysis.examples.lightbulbPowerInWatt / 1000))
+                (dataForAnalysis.examples.lightbulbPowerInWatt / 1000)
             )}
             icon={lightbulb}
             measures={"hours"}
           />
         </div>
+      </div>
+      <div>
+        <InfosButton onClick={() => openModal()} />
+        <SimpleModal>
+          <CarbonInfos />
+        </SimpleModal>
       </div>
     </div>
   );

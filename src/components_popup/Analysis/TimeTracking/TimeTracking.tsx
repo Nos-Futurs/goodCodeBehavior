@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { SimpleModal } from "../../Modal/Modal";
+import { useModalContext } from "../../Modal/modalContext";
 import { IconButton } from "../../Shared/Buttons/IconButton";
 import { InfosButton } from "../../Shared/Buttons/InfosButton";
-import { OnlyIconButton } from "../../Shared/Buttons/OnlyIconButton";
 import { ChartBlock } from "../../Shared/PieChart/ChartBlock";
 import details from "./../../Assets/details.png";
-import infos from "./../../Assets/infos.png";
 import { timeTrackingPercentage } from "./Time.methods";
+import { TimeInfos } from "./TimeInfos";
 import { TimeTrackingDetails } from "./TimeTrackingDetails";
 interface TimeTrackingProps {
   port: chrome.runtime.Port;
@@ -18,6 +19,7 @@ export const TimeTracking = ({ port }: TimeTrackingProps) => {
   const [chartData, setChartData] = useState<
     { title: string; value: number; color: string }[]
   >([]);
+  const { openModal } = useModalContext();
 
   useEffect(() => {
     // declare the data fetching function
@@ -68,7 +70,12 @@ export const TimeTracking = ({ port }: TimeTrackingProps) => {
               setShwoDetails(!shwoDetails);
             }}
           />
-          <InfosButton onClick={() => {}} />
+          <div>
+            <InfosButton onClick={() => openModal()} />
+            <SimpleModal>
+              <TimeInfos />
+            </SimpleModal>
+          </div>
         </div>
       </div>
 
