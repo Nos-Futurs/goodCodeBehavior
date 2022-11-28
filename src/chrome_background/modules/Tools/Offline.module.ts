@@ -1,8 +1,8 @@
+import { storageObject } from "../Shared.module";
+
 export function setBrowserOffline(changeStatut: boolean = false) {
   const data = chrome.storage.local.get("offlineStatut", (result) => {
-    const isOfflineObject = JSON.parse(result["offlineStatut"]);
-    const offlineStatut =
-      isOfflineObject !== undefined ? isOfflineObject : false;
+    const offlineStatut = storageObject(result["offlineStatut"], false);
 
     // If a change status is passed, this means that we should update the current rule.
     // Therefore, if the current status is true, we need to update the rule to false and then to register it in local storage.

@@ -1,3 +1,5 @@
+import { storageObject } from "../Shared.module";
+
 const timeRules = "timeRulesObject";
 const lastActiveUrlDomain = "lastActivetab";
 const tabsTime = "tabsTimeObject";
@@ -10,10 +12,7 @@ export function createNewTimeRule(
 ) {
   chrome.storage.local.get([timeRules], function (result) {
     const timeRulesJSON = result[timeRules];
-    let timeRulesObject: any = {};
-    if (timeRulesJSON !== undefined) {
-      timeRulesObject = JSON.parse(timeRulesJSON);
-    }
+    let timeRulesObject = storageObject(timeRulesJSON);
     timeRulesObject[domain] = { domain, time, nextWarning };
 
     const rulesTimeString = JSON.stringify(timeRulesObject);
@@ -28,10 +27,7 @@ export function createNewTimeRule(
 export function DeleteTimeRule(domain: string) {
   chrome.storage.local.get([timeRules], function (result) {
     const timeRulesJSON = result[timeRules];
-    let timeRulesObject: any = {};
-    if (timeRulesJSON !== undefined) {
-      timeRulesObject = JSON.parse(timeRulesJSON);
-    }
+    let timeRulesObject = storageObject(timeRulesJSON);
     if (timeRulesObject[domain]) {
       delete timeRulesObject[domain];
       const rulesTimeString = JSON.stringify(timeRulesObject);

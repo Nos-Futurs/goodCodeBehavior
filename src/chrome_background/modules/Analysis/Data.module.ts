@@ -1,17 +1,19 @@
-import { getDomainName } from "../Shared.module";
+import { getDomainName, storageObject } from "../Shared.module";
 
 export const headersReceivedListener = (details: any) => {
-  const origin = getDomainName(
-    !details.initiator ? details.url : details.initiator
-  );
-  const contentLengthFromResponse = details.responseHeaders.find(
-    (element: any) => element.name.toLowerCase() === "content-length"
-  );
-  const contentLength = !contentLengthFromResponse
-    ? { value: 0 }
-    : contentLengthFromResponse;
-  const requestSize = parseInt(contentLength.value, 10);
-  setByteLengthPerOrigin(origin, requestSize);
+  if (details.initiator || details.url) {
+    const origin = getDomainName(
+      !details.initiator ? details.url : details.initiator
+    );
+    const contentLengthFromResponse = details.responseHeaders.find(
+      (element: any) => element.name.toLowerCase() === "content-length"
+    );
+    const contentLength = !contentLengthFromResponse
+      ? { value: 0 }
+      : contentLengthFromResponse;
+    const requestSize = parseInt(contentLength.value, 10);
+    setByteLengthPerOrigin(origin, requestSize);
+  }
 };
 
 export const clearCarbonAnalysis = () => {
@@ -29,10 +31,7 @@ export const clearCarbonAnalysis = () => {
  */
 const setByteLengthPerOrigin = (origin: string, byteLength: number) => {
   chrome.storage.local.get(["TabsData"], function (result) {
-    const tabsDataJSON =
-      result["TabsData"] === null || JSON.stringify(result) === "{}"
-        ? {}
-        : JSON.parse(result["TabsData"]);
+    const tabsDataJSON = storageObject(result["TabsData"]);
     let bytePerOrigin =
       undefined === tabsDataJSON[origin]
         ? 0

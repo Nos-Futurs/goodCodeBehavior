@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { storageObject } from "../../../chrome_background/modules/Shared.module";
 import { SimpleModal } from "../../Modal/Modal";
 import { useModalContext } from "../../Modal/modalContext";
 import { IconButton } from "../../Shared/Buttons/IconButton";
@@ -28,8 +29,8 @@ export const TimeTracking = ({ port }: TimeTrackingProps) => {
         "tabsTimeObject",
         "startingTimeAnalyseDate",
       ]);
-      const dataObject = JSON.parse(data["tabsTimeObject"]);
-      const startingAnalyseDate = JSON.parse(data["startingTimeAnalyseDate"]);
+      const dataObject = storageObject(data["tabsTimeObject"]);
+      const startingAnalyseDate = storageObject(data["startingTimeAnalyseDate"]);
       let dataArray = [];
       for (let timeInfos in dataObject) {
         dataArray.push({

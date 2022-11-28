@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { storageObject } from "../../../chrome_background/modules/Shared.module";
 import { SimpleModal } from "../../Modal/Modal";
 import { useModalContext } from "../../Modal/modalContext";
 import { IconButton } from "../../Shared/Buttons/IconButton";
@@ -31,8 +32,8 @@ export const DataTracking = ({ port }: EnergyCarbonTrackingProps) => {
         "TabsData",
         "startingTimeAnalyseDate",
       ]);
-      const dataObject = JSON.parse(data["TabsData"]);
-      const startingAnalyseDate = JSON.parse(data["startingTimeAnalyseDate"]);
+      const dataObject = storageObject(data["TabsData"]);
+      const startingAnalyseDate = storageObject(data["startingTimeAnalyseDate"]);
       let dataArray = [];
       for (let dataINfo in dataObject) {
         dataArray.push({

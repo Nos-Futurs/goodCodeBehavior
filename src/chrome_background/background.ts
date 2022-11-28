@@ -7,9 +7,7 @@ import {
   onTabTrack,
   processTabChanged,
 } from "./modules/Analysis/TimeTracking.module";
-import {
-  browserColor
-} from "./modules/Tools/Color.module";
+import { browserColor } from "./modules/Tools/Color.module";
 import { dontDownloadImage } from "./modules/Tools/Download.module";
 import { setBrowserOffline } from "./modules/Tools/Offline.module";
 import {
@@ -34,8 +32,6 @@ chrome.tabs.onActivated.addListener(function () {
   onTabTrack();
 });
 
-chrome.tabs.onCreated.addListener(function () {});
-
 chrome.tabs.onUpdated.addListener(function () {
   // check colors status
   browserColor(false);
@@ -55,6 +51,7 @@ chrome.runtime.onConnect.addListener(function (port) {
     if (request === "ResetAnalysis") {
       clearTimeStorage();
       clearCarbonAnalysis();
+      //chrome.storage.local.clear();
     }
     if (request === "SetUnactiveTabsOffline") {
       setBrowserOffline(true);
@@ -71,13 +68,11 @@ chrome.runtime.onConnect.addListener(function (port) {
   });
 });
 
-
-chrome.alarms.onAlarm.addListener(function(alarm) {
+chrome.alarms.onAlarm.addListener(function (alarm) {
   if (alarm.name === "timeNotification") {
     notificationSending();
   }
 });
-
 
 chrome.webRequest.onCompleted.addListener(
   function (event: any) {
