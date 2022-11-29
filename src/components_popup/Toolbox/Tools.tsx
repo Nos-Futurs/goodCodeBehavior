@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { storageObject } from "../../chrome_background/modules/Shared.module";
 import InputBox from "./InputChoice/InputBox";
 import ToggleSwitch from "./ToggleSwitch/ToggleSwitch";
 
@@ -18,13 +19,15 @@ export const Tools = ({ port, url }: ToolsProps) => {
       const data = await chrome.storage.local.get([
         "browserColorStatus",
         "offlineStatut",
-        "downloadStatut"
+        "downloadStatut",
       ]);
-      const dataColorObject = JSON.parse(data["browserColorStatus"]);
-      const dataOfflineObject = JSON.parse(data["offlineStatut"]);
-      const downloadStatutObject = JSON.parse(data["downloadStatut"]);
-      setImageDownloading(downloadStatutObject);
-      setOffline(dataOfflineObject);
+      const dataColorObject = storageObject(data["browserColorStatus"], {
+        colorStatus: true,
+      });
+      const dataOffline = storageObject(data["offlineStatut"], false);
+      const downloadStatut = storageObject(data["downloadStatut"], true);
+      setImageDownloading(downloadStatut);
+      setOffline(dataOffline);
       setGrey(dataColorObject["colorStatus"]);
     };
     // call the function

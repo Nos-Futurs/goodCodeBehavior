@@ -1,4 +1,4 @@
-import { getDomainName } from "../Shared.module";
+import { getDomainName, storageObject } from "../Shared.module";
 
 const tabsTime = "tabsTimeObject";
 const lastActiveUrlDomain = "lastActivetab";
@@ -23,19 +23,13 @@ export function processTabChanged(isChromeActive: boolean) {
           const tabsTimeString = result[tabsTime];
           const startingDate = result[startingTimeAnalyseDate];
           // get tabsTimeObject and lastActiveUrlDomain
-          let tabTimeObject: any = {};
-          if (JSON.stringify(tabsTimeString) !== "{}") {
-            tabTimeObject = JSON.parse(tabsTimeString);
-          }
-          let lastActiveTab: any = {};
-          if (JSON.stringify(lastActiveWebSite) !== "{}") {
-            lastActiveTab = JSON.parse(lastActiveWebSite);
-          }
+          let tabTimeObject = storageObject(tabsTimeString);
+          let lastActiveTab = storageObject(lastActiveWebSite);
           let currentDate = Date.now();
-          let startingDateAnalysis: number =
-            startingDate !== null
-              ? parseInt(JSON.parse(startingDate))
-              : currentDate;
+          let startingDateAnalysis = storageObject(
+            startingDate,
+            currentDate
+          );
 
           // If there is a last active url in storage
           if (

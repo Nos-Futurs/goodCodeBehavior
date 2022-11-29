@@ -9,14 +9,11 @@ export const dataTrackingPercentage = (
   let minDisplayedWebSite: {
     domain: string;
     bytes: number;
-  } = {
-    domain: "start",
-    bytes: 0,
   };
   let displayedWebSite: {
     domain: string;
     bytes: number;
-  }[] = [minDisplayedWebSite];
+  }[] = [];
 
   data.map((datum) => {
     if (displayedWebSite.length < 4) {
@@ -24,7 +21,9 @@ export const dataTrackingPercentage = (
         domain: datum.domain,
         bytes: datum.bytes,
       });
-      if (minDisplayedWebSite.bytes > datum.bytes) {
+      if (!minDisplayedWebSite) {
+        minDisplayedWebSite = datum;
+      } else if (minDisplayedWebSite.bytes > datum.bytes) {
         minDisplayedWebSite = datum;
       }
     } else {
@@ -61,7 +60,7 @@ export const dataTrackingPercentage = (
   const otherData: number = totalData - mainSiteData;
   resultArrayData.push({
     title: "others",
-    value: Math.floor(100 * (otherData / totalData)),
+    value: totalData === 0 ? 0 : Math.floor(100 * (otherData / totalData)),
     color: color[compteur],
   });
 

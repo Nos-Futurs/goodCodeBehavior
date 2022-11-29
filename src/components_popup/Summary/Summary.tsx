@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { dataForAnalysis } from "../../chrome_background/data/data";
+import { storageObject } from "../../chrome_background/modules/Shared.module";
 import { energyAndCarbonFromBytes } from "../Analysis/EnergyCarbon/methods/carbonAnalysis.methods";
 import { formatItemTime } from "../Analysis/TimeTracking/Time.methods";
 import clock from "./../Assets/clock.png";
@@ -18,8 +19,8 @@ export const Summary = ({}: SummaryProps) => {
         "TabsData",
         "startingTimeAnalyseDate",
       ]);
-      const dataTimeObject = JSON.parse(data["tabsTimeObject"]);
-      const dataCarbonObject = JSON.parse(data["TabsData"]);
+      const dataTimeObject = storageObject(data["tabsTimeObject"]);
+      const dataCarbonObject = storageObject(data["TabsData"]);
       //const startingAnalyseDate = JSON.parse(data["startingTimeAnalyseDate"]);
       let activeTime = 0;
       for (let timeInfos in dataTimeObject) {

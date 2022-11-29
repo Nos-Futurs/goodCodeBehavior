@@ -1,4 +1,5 @@
 import React, { createContext, ReactNode, useContext } from 'react';
+import { InfosEnum } from '../Shared/methods/enum';
 import { SimpleModal } from './Modal';
 import { useSimpleModal } from './useSimpleModal';
 
@@ -8,7 +9,7 @@ interface ModalProviderProps {
 }
 
 const ModalContext = createContext({
-  openModal: () => {
+  openModal: (type: InfosEnum) => {
     return;
   },
 });

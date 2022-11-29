@@ -1,4 +1,4 @@
-import { getDomainName } from "../Shared.module";
+import { getDomainName, storageObject } from "../Shared.module";
 
 export function browserColor(changeStatut: boolean = false) {
   // get current tab
@@ -8,10 +8,7 @@ export function browserColor(changeStatut: boolean = false) {
       chrome.storage.local.get(["browserColorStatus"], function (result) {
         const tabsColorStatusString = result["browserColorStatus"];
         // get tabsColorStatusObject if exists
-        let tabsColorStatusObject: any = {};
-        if (tabsColorStatusString) {
-          tabsColorStatusObject = JSON.parse(tabsColorStatusString);
-        }
+        let tabsColorStatusObject = storageObject(tabsColorStatusString);
 
         // If tabsColorStatusObject exists and the domain already has a status defined then :
         if (

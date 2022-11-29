@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { SimpleModal } from "../../Modal/Modal";
+import { storageObject } from "../../../chrome_background/modules/Shared.module";
 import { useModalContext } from "../../Modal/modalContext";
 import { IconButton } from "../../Shared/Buttons/IconButton";
 import { InfosButton } from "../../Shared/Buttons/InfosButton";
+import { InfosEnum } from "../../Shared/methods/enum";
 import { ChartBlock } from "../../Shared/PieChart/ChartBlock";
 import details from "./../../Assets/details.png";
 import { timeTrackingPercentage } from "./Time.methods";
-import { TimeInfos } from "./TimeInfos";
 import { TimeTrackingDetails } from "./TimeTrackingDetails";
 interface TimeTrackingProps {
   port: chrome.runtime.Port;
@@ -28,8 +28,10 @@ export const TimeTracking = ({ port }: TimeTrackingProps) => {
         "tabsTimeObject",
         "startingTimeAnalyseDate",
       ]);
-      const dataObject = JSON.parse(data["tabsTimeObject"]);
-      const startingAnalyseDate = JSON.parse(data["startingTimeAnalyseDate"]);
+      const dataObject = storageObject(data["tabsTimeObject"]);
+      const startingAnalyseDate = storageObject(
+        data["startingTimeAnalyseDate"]
+      );
       let dataArray = [];
       for (let timeInfos in dataObject) {
         dataArray.push({
@@ -71,10 +73,7 @@ export const TimeTracking = ({ port }: TimeTrackingProps) => {
             }}
           />
           <div>
-            <InfosButton onClick={() => openModal()} />
-            <SimpleModal>
-              <TimeInfos />
-            </SimpleModal>
+            <InfosButton onClick={() => openModal(InfosEnum.TIME)} />
           </div>
         </div>
       </div>

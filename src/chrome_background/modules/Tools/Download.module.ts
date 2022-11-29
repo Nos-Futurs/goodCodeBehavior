@@ -1,11 +1,10 @@
+import { storageObject } from "../Shared.module";
+
 export function dontDownloadImage(changeStatut: boolean = false) {
   chrome.storage.local.get("downloadStatut", (result) => {
     const isDownloadObject = result["downloadStatut"];
-    const downloadStatus =
-      isDownloadObject !== undefined
-        ? JSON.parse(result["downloadStatut"])
-        : true;
-
+    const downloadStatus = storageObject(isDownloadObject, true)
+    
     // If a change status is passed, this means that we should update the current rule.
     // Therefore, if the current status is true, we need to update the rule to false and then to register it in local storage.
     // on the contrary, when we open a new tab we want the current rule to be passed to this tab without changing local storage.
