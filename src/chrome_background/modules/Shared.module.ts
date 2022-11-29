@@ -11,10 +11,10 @@ export function storageObject(objectJSON: string, returnObject?: any) {
     JSON.stringify(objectJSON) !== "{}" &&
     objectJSON !== undefined &&
     JSON.stringify(objectJSON) !== "undefined" &&
-    JSON.stringify(objectJSON) !== 'null' &&
+    JSON.stringify(objectJSON) !== "null" &&
     objectJSON !== null
   ) {
     return JSON.parse(objectJSON);
   }
-  return returnObject ? returnObject : {};
+  return returnObject !== undefined ? returnObject : {};
 }

@@ -19,9 +19,11 @@ export const Tools = ({ port, url }: ToolsProps) => {
       const data = await chrome.storage.local.get([
         "browserColorStatus",
         "offlineStatut",
-        "downloadStatut"
+        "downloadStatut",
       ]);
-      const dataColorObject = storageObject(data["browserColorStatus"], {"colorStatus": true});
+      const dataColorObject = storageObject(data["browserColorStatus"], {
+        colorStatus: true,
+      });
       const dataOffline = storageObject(data["offlineStatut"], false);
       const downloadStatut = storageObject(data["downloadStatut"], true);
       setImageDownloading(downloadStatut);
