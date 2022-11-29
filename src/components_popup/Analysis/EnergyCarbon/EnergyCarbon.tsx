@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { dataForAnalysis } from "../../../chrome_background/data/data";
 import { storageObject } from "../../../chrome_background/modules/Shared.module";
-import { SimpleModal } from "../../Modal/Modal";
 import { useModalContext } from "../../Modal/modalContext";
 import { InfosButton } from "../../Shared/Buttons/InfosButton";
+import { InfosEnum } from "../../Shared/methods/enum";
 import co2Cloud from "./../../Assets/co2-cloud.png";
 import dataIcon from "./../../Assets/data.png";
 import lightbulb from "./../../Assets/lightbulb.png";
 import lighting from "./../../Assets/lighting.png";
-import { CarbonInfos } from "./CarbonInfos";
 import { ItemTracking } from "./Item";
 import { energyAndCarbonFromBytes } from "./methods/carbonAnalysis.methods";
 
@@ -114,10 +113,7 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
         </div>
       </div>
       <div>
-        <InfosButton onClick={() => openModal()} />
-        <SimpleModal>
-          <CarbonInfos />
-        </SimpleModal>
+        <InfosButton onClick={() => openModal(InfosEnum.ENERGY_CARBON)} />
       </div>
     </div>
   );

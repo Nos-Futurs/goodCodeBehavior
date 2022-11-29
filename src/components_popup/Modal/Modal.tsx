@@ -1,28 +1,31 @@
-import React, { ReactNode, useRef } from "react";
+import React, { useRef } from "react";
 import * as ReactDom from "react-dom";
+import { InfosEnum } from "../Shared/methods/enum";
+import { CarbonInfos } from "./ModalInfos/CarbonInfos";
+import { DataInfos } from "./ModalInfos/DataInfos";
+import { TimeInfos } from "./ModalInfos/TimeInfos";
+import { TimeRulesInfos } from "./ModalInfos/TimeRulesInfos";
 import { useSimpleModal } from "./useSimpleModal";
-
-interface SimpleModalProps {
-  children?: ReactNode;
-}
 
 const portalDiv: HTMLElement | null = document.getElementById("portal");
 
-export const SimpleModal = ({ children }: SimpleModalProps) => {
+export const SimpleModal = () => {
   const node = useRef(null);
-  const { isOpen, closeModal } = useSimpleModal();
+  const { isOpen, closeModal, typeModal } = useSimpleModal();
 
-  const handleOutsideClick = (e: any) => {
-    console.log(node);
-    console.log(e);
-    if (node.current === e.target) closeModal();
+  const informationToDisplay = (type: InfosEnum) => {
+    if (type === InfosEnum.TIME){
+      return <TimeInfos/>;
+    } else if (type === InfosEnum.ENERGY_CARBON){
+      return <CarbonInfos/>;
+    } else if (type === InfosEnum.DATA){
+      return <DataInfos/>;
+    } else if (type === InfosEnum.TIME_RULE){
+      return <TimeRulesInfos/>;
+    } else {
+      return <></>
+    }
   };
-
-  if (isOpen) {
-    document.addEventListener("click", (e) => handleOutsideClick(e));
-  } else {
-    document.removeEventListener("click", (e) => handleOutsideClick(e));
-  }
 
   if (!portalDiv) {
     return <></>;
@@ -61,10 +64,12 @@ export const SimpleModal = ({ children }: SimpleModalProps) => {
             height: "240px",
             backgroundColor: "white",
             overflowY: "scroll",
-            transform: "translate(-50%, -50%)"
+            transform: "translate(-50%, -50%)",
           }}
         >
-          <div style={{ margin: "20px" }}> {children}</div>
+          <div style={{ margin: "20px" }}>
+            {informationToDisplay(typeModal)}
+          </div>
         </div>
       </div>,
       portalDiv
