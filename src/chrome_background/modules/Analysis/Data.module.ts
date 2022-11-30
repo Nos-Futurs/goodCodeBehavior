@@ -2,17 +2,18 @@ import { getDomainName, storageObject } from "../Shared.module";
 
 export const headersReceivedListener = (details: any) => {
   if (details.initiator || details.url) {
-    const origin = getDomainName(
-      !details.initiator ? details.url : details.initiator
-    );
-    const contentLengthFromResponse = details.responseHeaders.find(
-      (element: any) => element.name.toLowerCase() === "content-length"
-    );
-    const contentLength = !contentLengthFromResponse
-      ? { value: 0 }
-      : contentLengthFromResponse;
-    const requestSize = parseInt(contentLength.value, 10);
-    setByteLengthPerOrigin(origin, requestSize);
+    const url = !details.initiator ? details.url : details.initiator;
+    if (url.slice(0, 19) !== "chrome-extension://") {
+      const origin = getDomainName(url);
+      const contentLengthFromResponse = details.responseHeaders.find(
+        (element: any) => element.name.toLowerCase() === "content-length"
+      );
+      const contentLength = !contentLengthFromResponse
+        ? { value: 0 }
+        : contentLengthFromResponse;
+      const requestSize = parseInt(contentLength.value, 10);
+      setByteLengthPerOrigin(origin, requestSize);
+    }
   }
 };
 

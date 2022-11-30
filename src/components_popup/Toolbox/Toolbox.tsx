@@ -19,7 +19,7 @@ export const Toolbox = ({ port }: ToolboxProps) => {
     chrome.tabs &&
       chrome.tabs.query(queryInfo, (tabs) => {
         const url = tabs[0].url;
-        if (url) {
+        if (url && url.slice(0, 19) !== "chrome-extension://") {
           const domainUrl = getDomainName(url)
           setUrl(domainUrl);
         }

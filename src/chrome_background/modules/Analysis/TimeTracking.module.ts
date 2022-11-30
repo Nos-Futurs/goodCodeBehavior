@@ -11,7 +11,7 @@ export function processTabChanged(isChromeActive: boolean) {
       const currentTab = tabs[0];
       const url = currentTab.url;
       let domainName: string;
-      if (url) {
+      if (url && url.slice(0, 19) !== "chrome-extension://") {
         domainName = getDomainName(url);
       } else {
         throw new Error("url not found");
