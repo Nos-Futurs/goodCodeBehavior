@@ -21,7 +21,7 @@ export const CategoryHeader = ({
         display: "flex",
         width: "40%",
         padding: "8px",
-        marginLeft: "10px",
+        marginLeft: "15px",
         borderBottom: "solid",
         borderBottomWidth: "2px",
         borderBottomColor: "rgba(58, 112, 39, 1)",
@@ -37,29 +37,28 @@ export const CategoryHeader = ({
       >
         {title}
       </div>
-      {!dropDown ? (
-        <button>
-          <img
-            style={{ width: "10px", height: "10px" }}
-            src={dropDownImage}
-            alt="dropdown_image"
-            onClick={() => {
-              setDropDown(!dropDown);
-            }}
-          />
-        </button>
-      ) : (
-        <button>
-          <img
-            style={{ width: "10px", height: "10px" }}
-            src={dropUpImage}
-            alt="dropup_image"
-            onClick={() => {
-              setDropDown(!dropDown);
-            }}
-          />
-        </button>
-      )}
+      <ButtonDropDown isDropDownOpen={dropDown} setDropDown={setDropDown} />
     </div>
+  );
+};
+
+interface DropDownButton {
+  setDropDown: React.Dispatch<React.SetStateAction<boolean>>;
+  isDropDownOpen: boolean;
+}
+
+const ButtonDropDown = ({ isDropDownOpen, setDropDown }: DropDownButton) => {
+  return (
+    <button
+      onClick={() => {
+        setDropDown(!isDropDownOpen);
+      }}
+    >
+      <img
+        style={{ width: "10px", height: "10px" }}
+        src={isDropDownOpen ? dropUpImage : dropDownImage}
+        alt="dropup_image"
+      />
+    </button>
   );
 };

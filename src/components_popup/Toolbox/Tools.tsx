@@ -47,7 +47,7 @@ export const Tools = ({ port, url }: ToolsProps) => {
   };
 
   return (
-    <div style={{ marginTop: "15px" }}>
+    <div style={{ marginTop: "25px" }}>
       <ToggleSwitch
         label={"Set tabs in black and white"}
         status={!grey}

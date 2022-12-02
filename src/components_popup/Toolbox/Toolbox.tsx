@@ -20,14 +20,14 @@ export const Toolbox = ({ port }: ToolboxProps) => {
       chrome.tabs.query(queryInfo, (tabs) => {
         const url = tabs[0].url;
         if (url && url.slice(0, 19) !== "chrome-extension://") {
-          const domainUrl = getDomainName(url)
+          const domainUrl = getDomainName(url);
           setUrl(domainUrl);
         }
       });
   }, []);
 
   return (
-    <div style={{ marginBottom: "10px" }}>
+    <div style={{ marginBottom: "15px", marginTop: "15px" }}>
       <div
         style={{
           margin: "10px 0 10px 0",
