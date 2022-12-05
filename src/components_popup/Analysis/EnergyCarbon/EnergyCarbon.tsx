@@ -77,19 +77,21 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
         }}
       >
         <ItemTracking
-          text={"Mb exchanged :"}
+          text={"Data exchanged:"}
           number={dataExchange / 1000000}
           icon={dataIcon}
+          measures={"Mb"}
         />
         <ItemTracking
-          text={"Energy in kWh :"}
+          text={"Energy used:"}
           number={
             energyEquivalent + dataForAnalysis.energy.kWhPerMinuteDevice * time
           }
           icon={lighting}
+          measures={"kWh"}
         />
         <ItemTracking
-          text={"gCO2 Equivalent :"}
+          text={"Equivalent to:"}
           number={
             CO2Equivalent +
             dataForAnalysis.energy.kWhPerMinuteDevice *
@@ -98,6 +100,7 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
                 .carbonIntensityFactorIngCO2PerKWh.global
           }
           icon={co2Cloud}
+          measures={"gCO2"}
         />
         <div style={{ paddingTop: "20px" }}>
           <ItemTracking

@@ -30,7 +30,7 @@ export const ItemTracking = ({
         {number.toFixed(toFixNumber)}
       </div>
       {measures && (
-        <div style={{ paddingLeft: "10px", fontSize: "15px" }}>{measures}</div>
+        <div style={{ paddingLeft: "10px", fontSize: "15px", fontWeight: "bold" }}>{measures}</div>
       )}
     </div>
   );
