@@ -18,3 +18,12 @@ export function storageObject(objectJSON: string, returnObject?: any) {
   }
   return returnObject !== undefined ? returnObject : {};
 }
+
+// remove wwww. for chart items legend
+export function cleanDomainName(domainName: string): string {
+  if (domainName.slice(0, 4) === "www.") {
+    return domainName.slice(4);
+  } else {
+    return domainName;
+  }
+}

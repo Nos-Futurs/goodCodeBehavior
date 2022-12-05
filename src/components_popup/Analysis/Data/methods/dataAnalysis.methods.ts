@@ -1,3 +1,5 @@
+import { cleanDomainName } from "../../../../chrome_background/modules/Shared.module";
+
 export const dataTrackingPercentage = (
   data: { domain: string; bytes: number }[]
 ): {
@@ -50,7 +52,7 @@ export const dataTrackingPercentage = (
     let percentageData = Math.floor(100 * (website.bytes / totalData));
 
     resultArrayData.push({
-      title: website.domain,
+      title: cleanDomainName(website.domain),
       value: percentageData,
       color: color[compteur],
     });
@@ -63,6 +65,6 @@ export const dataTrackingPercentage = (
     value: totalData === 0 ? 0 : Math.floor(100 * (otherData / totalData)),
     color: color[compteur],
   });
-
+  resultArrayData = resultArrayData.filter((result) => result.value > 0);
   return resultArrayData;
 };

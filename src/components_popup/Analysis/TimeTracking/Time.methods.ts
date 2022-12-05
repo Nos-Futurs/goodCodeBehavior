@@ -1,3 +1,5 @@
+import { cleanDomainName } from "../../../chrome_background/modules/Shared.module";
+
 export const timeTrackingPercentage = (
   data: { domain: string; time: number }[]
 ): { title: string; value: number; color: string }[] => {
@@ -38,7 +40,7 @@ export const timeTrackingPercentage = (
     displayedWebSite.map((website) => {
       let percentage = Math.floor(100 * (website.time / totalTime));
       resultArray.push({
-        title: website.domain,
+        title: cleanDomainName(website.domain),
         value: percentage,
         color: color[compteur],
       });
@@ -51,6 +53,7 @@ export const timeTrackingPercentage = (
       value: Math.floor(100 * (otherTime / totalTime)),
       color: color[compteur],
     });
+    resultArray = resultArray.filter((result) => result.value > 0);
     return resultArray;
   } else {
     return [
