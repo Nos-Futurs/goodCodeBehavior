@@ -1,9 +1,9 @@
 {
     "name": "Good Code Behaviour",
     "description": "Chrome plugin to monitor your internet usage.",
-    "version": "0.1",
+    "version": "0.0.1",
     "manifest_version": 3,
-    "author":"Paul PEHARPRE (Nos Futurs)",
+    "author":"Nos Futurs",
     "action": {
       "default_popup": "index.html",
       "default_title": "Open the popup"
@@ -16,7 +16,6 @@
       "scripting", 
       "tabs", 
       "storage", 
-      "declarativeContent", 
       "webRequest", 
       "declarativeNetRequest",
       "notifications",

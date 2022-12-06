@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { storageObject } from "../../chrome_background/modules/Shared.module";
+import { useModalContext } from "../Modal/modalContext";
+import { InfosEnum } from "../Shared/methods/enum";
 import InputBox from "./InputChoice/InputBox";
 import ToggleSwitch from "./ToggleSwitch/ToggleSwitch";
 
@@ -12,6 +14,7 @@ export const Tools = ({ port, url }: ToolsProps) => {
   const [imageDownloading, setImageDownloading] = useState<boolean>(false);
   const [grey, setGrey] = useState<boolean>(false);
   const [offline, setOffline] = useState<boolean>(false);
+  const { openModal } = useModalContext();
 
   useEffect(() => {
     // declare the data fetching function
@@ -47,13 +50,16 @@ export const Tools = ({ port, url }: ToolsProps) => {
   };
 
   return (
-    <div style={{ marginTop: "15px" }}>
+    <div style={{ marginTop: "25px" }}>
       <ToggleSwitch
         label={"Set tabs in black and white"}
         status={!grey}
         onClick={() => {
           blackAndWhiteBackground();
           setGrey(!grey);
+        }}
+        onInfosClick={() => {
+          openModal(InfosEnum.BLACK_WHITE_RULE);
         }}
       />
       <ToggleSwitch
@@ -63,6 +69,9 @@ export const Tools = ({ port, url }: ToolsProps) => {
           onlineBackground();
           setOffline(!offline);
         }}
+        onInfosClick={() => {
+          openModal(InfosEnum.OFFLINE_RULE);
+        }}
       />
       <ToggleSwitch
         label={"Avoid downloading images"}
@@ -70,6 +79,9 @@ export const Tools = ({ port, url }: ToolsProps) => {
         onClick={() => {
           dontDownloadImage();
           setImageDownloading(!imageDownloading);
+        }}
+        onInfosClick={() => {
+          openModal(InfosEnum.DOWNLOAD_RULE);
         }}
       />
       <InputBox port={port} label={"Manage your time rules : "} url={url} />

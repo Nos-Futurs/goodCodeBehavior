@@ -32,7 +32,7 @@ export const Analysis = ({port}: AnalysisProps) => {
           <div
             style={{
               margin: "15px",
-              marginTop: "30px",
+              marginTop: "25px",
               display: "flex",
               flexDirection: "row",
             }}

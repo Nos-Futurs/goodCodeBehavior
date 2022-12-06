@@ -110,9 +110,13 @@ function InputBox({ port, url, label }: MySwitchProps) {
             setAction("seeRules");
           }}
         />
-        <InfosButton marginTop={"0px"} onClick={() => openModal(InfosEnum.TIME_RULE)} />
+        <InfosButton
+          marginTop={"0px"}
+          onClick={() => openModal(InfosEnum.TIME_RULE)}
+        />
       </div>
       {seeRules &&
+        rules.length > 0 &&
         rules.map((rule) => (
           <div
             style={{
@@ -130,6 +134,17 @@ function InputBox({ port, url, label }: MySwitchProps) {
             />
           </div>
         ))}
+      {seeRules && rules.length === 0 && (
+        <div
+          style={{
+            display: "flex",
+            paddingTop: "10px",
+            flexDirection: "row",
+          }}
+        >
+          <div style={{ width: "80%" }}>No rule defined yet.</div>
+        </div>
+      )}
     </div>
   );
 }

@@ -34,10 +34,10 @@ export const DataTracking = ({ port }: EnergyCarbonTrackingProps) => {
         data["startingTimeAnalyseDate"]
       );
       let dataArray = [];
-      for (let dataINfo in dataObject) {
+      for (let dataInfo in dataObject) {
         dataArray.push({
-          domain: dataINfo,
-          bytes: parseInt(dataObject[dataINfo].bytes),
+          domain: dataInfo,
+          bytes: parseInt(dataObject[dataInfo].bytes),
         });
       }
       const percentageArray = dataTrackingPercentage(dataArray);
