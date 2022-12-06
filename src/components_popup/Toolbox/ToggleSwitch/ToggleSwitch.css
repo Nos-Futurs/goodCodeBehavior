@@ -8,6 +8,7 @@
 .labelContainer {
   padding-left: 40px;
   font-size: 15px;
+  margin-right: auto;
 }
 .toggle-switch {
   position: relative;

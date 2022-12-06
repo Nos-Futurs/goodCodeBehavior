@@ -4,7 +4,10 @@ import { InfosEnum } from "../Shared/methods/enum";
 import { CarbonInfos } from "./ModalInfos/CarbonInfos";
 import { DataInfos } from "./ModalInfos/DataInfos";
 import { TimeInfos } from "./ModalInfos/TimeInfos";
-import { TimeRulesInfos } from "./ModalInfos/TimeRulesInfos";
+import { BlackAndWhiteRuleInfos } from "./ModalInfos/ToolboxInfos/BlackAndWhiteRule";
+import { OfflineTabsInfos } from "./ModalInfos/ToolboxInfos/NonActiveTabRule";
+import { DownloadRuleInfos } from "./ModalInfos/ToolboxInfos/NotDownloadingRule";
+import { TimeRulesInfos } from "./ModalInfos/ToolboxInfos/TimeRulesInfos";
 import { useSimpleModal } from "./useSimpleModal";
 
 const portalDiv: HTMLElement | null = document.getElementById("portal");
@@ -14,16 +17,22 @@ export const SimpleModal = () => {
   const { isOpen, closeModal, typeModal } = useSimpleModal();
 
   const informationToDisplay = (type: InfosEnum) => {
-    if (type === InfosEnum.TIME){
-      return <TimeInfos/>;
-    } else if (type === InfosEnum.ENERGY_CARBON){
-      return <CarbonInfos/>;
-    } else if (type === InfosEnum.DATA){
-      return <DataInfos/>;
-    } else if (type === InfosEnum.TIME_RULE){
-      return <TimeRulesInfos/>;
+    if (type === InfosEnum.TIME) {
+      return <TimeInfos />;
+    } else if (type === InfosEnum.ENERGY_CARBON) {
+      return <CarbonInfos />;
+    } else if (type === InfosEnum.DATA) {
+      return <DataInfos />;
+    } else if (type === InfosEnum.TIME_RULE) {
+      return <TimeRulesInfos />;
+    } else if (type === InfosEnum.BLACK_WHITE_RULE) {
+      return <BlackAndWhiteRuleInfos />;
+    } else if (type === InfosEnum.DOWNLOAD_RULE) {
+      return <DownloadRuleInfos />;
+    } else if (type === InfosEnum.OFFLINE_RULE) {
+      return <OfflineTabsInfos />;
     } else {
-      return <></>
+      return <></>;
     }
   };
 

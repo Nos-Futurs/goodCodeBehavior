@@ -1,4 +1,6 @@
 import React from "react";
+import { OnlyIconButton } from "../../Shared/Buttons/OnlyIconButton";
+import infos from "./../../Assets/infos.png";
 import "./ToggleSwitch.css";
 
 interface MySwitchProps {
@@ -6,11 +8,13 @@ interface MySwitchProps {
   label: string;
   status?: boolean;
   onClick?: () => void;
+  onInfosClick?: () => void;
 }
 
 function ToggleSwitch({
   disabled = false,
   onClick = () => {},
+  onInfosClick = () => {},
   status = false,
   label,
 }: MySwitchProps) {
@@ -34,6 +38,7 @@ function ToggleSwitch({
         </label>
       </div>
       <div className="labelContainer">{label}</div>
+      <OnlyIconButton icon={infos} onClick={() => {onInfosClick()}} />
     </div>
   );
 }
