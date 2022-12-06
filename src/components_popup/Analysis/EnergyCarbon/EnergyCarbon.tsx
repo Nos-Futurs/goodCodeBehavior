@@ -8,6 +8,7 @@ import co2Cloud from "./../../Assets/co2-cloud.png";
 import dataIcon from "./../../Assets/data.png";
 import lightbulb from "./../../Assets/lightbulb.png";
 import lighting from "./../../Assets/lighting.png";
+import car from "./../../Assets/car.png";
 import { ItemTracking } from "./Item";
 import { energyAndCarbonFromBytes } from "./methods/carbonAnalysis.methods";
 
@@ -56,6 +57,13 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
     port.postMessage("ResetDataAnalysis");
   };
 
+  const gramCO2 =
+    CO2Equivalent +
+    dataForAnalysis.energy.kWhPerMinuteDevice *
+      time *
+      dataForAnalysis.carbonIntensity.byRegion.carbonIntensityFactorIngCO2PerKWh
+        .global;
+ 
   return (
     <div
       style={{
@@ -81,6 +89,7 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
           number={dataExchange / 1000000}
           icon={dataIcon}
           measures={"Mb"}
+          toFixNumber={0}
         />
         <ItemTracking
           text={"Energy used:"}
@@ -92,15 +101,10 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
         />
         <ItemTracking
           text={"Equivalent to:"}
-          number={
-            CO2Equivalent +
-            dataForAnalysis.energy.kWhPerMinuteDevice *
-              time *
-              dataForAnalysis.carbonIntensity.byRegion
-                .carbonIntensityFactorIngCO2PerKWh.global
-          }
+          number={gramCO2}
           icon={co2Cloud}
           measures={"gCO2"}
+          toFixNumber={0}
         />
         <div style={{ paddingTop: "20px" }}>
           <ItemTracking
@@ -112,6 +116,13 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
             )}
             icon={lightbulb}
             measures={"hours"}
+            toFixNumber={0}
+          />
+          <ItemTracking
+            text={"Car ride quivalence"}
+            number={gramCO2/dataForAnalysis.examples.gCO2_per_kmCar}
+            icon={car}
+            measures={"km"}
           />
         </div>
       </div>

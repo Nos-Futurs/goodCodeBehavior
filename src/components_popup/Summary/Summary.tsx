@@ -11,6 +11,8 @@ interface SummaryProps {}
 export const Summary = ({}: SummaryProps) => {
   const [timeActive, setTimeActive] = useState<number>(0);
   const [usedEnergy, setUsedEnergy] = useState<number>(0);
+  const [co2Equivalent, setCO2Equivalent] = useState<number>(0);
+
   useEffect(() => {
     // declare the data fetching function
     const fetchData = async () => {
@@ -36,6 +38,11 @@ export const Summary = ({}: SummaryProps) => {
       setTimeActive(activeTime);
       setUsedEnergy(
         energyUsed + dataForAnalysis.energy.kWhPerMinuteDevice * activeTime
+      );
+      setCO2Equivalent(
+        (energyUsed + dataForAnalysis.energy.kWhPerMinuteDevice * activeTime) *
+          dataForAnalysis.carbonIntensity.byRegion
+            .carbonIntensityFactorIngCO2PerKWh.global
       );
     };
     // call the function
@@ -107,7 +114,7 @@ export const Summary = ({}: SummaryProps) => {
             style={{ width: "28px", margin: "6px 6px 6px 15px" }}
           />
           <div style={{ paddingLeft: "15px", fontSize: "15px" }}>
-            {usedEnergy.toFixed(2).toString() + " kWh"}
+            {usedEnergy.toFixed(2).toString() + " kWh (" + co2Equivalent.toFixed(0).toString() + " gCO2)"}
           </div>
         </div>
       </div>
