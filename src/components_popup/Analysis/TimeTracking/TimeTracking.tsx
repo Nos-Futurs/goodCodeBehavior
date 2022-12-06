@@ -32,7 +32,7 @@ export const TimeTracking = ({ port }: TimeTrackingProps) => {
       const startingAnalyseDate = storageObject(
         data["startingTimeAnalyseDate"]
       );
-      let dataArray = [];
+      let dataArray: Array<{domain: string, time: number}> = [];
       for (let timeInfos in dataObject) {
         dataArray.push({
           domain: timeInfos,

@@ -1,15 +1,16 @@
 import React from "react";
 import { formatItemTime } from "./Time.methods";
 
-const setDecreasingOrder = (timeTracked: { domain: string; time: string }[]) => {
-    timeTracked.sort((a, b) => parseFloat(b.time) - parseFloat(a.time));
+const setDecreasingOrder = (timeTracked: { domain: string; time: number }[]) => {
+    timeTracked.sort((a, b) => b.time - a.time);
+    timeTracked = timeTracked.filter(item => item.time >= 1)
     return timeTracked
 };
 
 interface TimeTrackingDetailsProps {
     port: chrome.runtime.Port;
     startDate: Date | null;
-    timeTracked: { domain: string; time: string }[];
+    timeTracked: { domain: string; time: number }[];
   }
 
 export const TimeTrackingDetails = ({
@@ -29,10 +30,10 @@ export const TimeTrackingDetails = ({
         <button onClick={eraseTimeData}>Reset Analysis</button>
       </div>
       <div>
-        {timeTrackedDescending.map((item: { domain: string; time: string }) => {
+        {timeTrackedDescending.map((item: { domain: string; time: number }) => {
           return (
             <div style={{ paddingTop: "3px" }}>
-              {item.domain + " : " + formatItemTime(parseInt(item.time))}
+              {item.domain + " : " + formatItemTime(item.time)}
             </div>
           );
         })}
