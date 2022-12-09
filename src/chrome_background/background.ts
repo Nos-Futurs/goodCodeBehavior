@@ -4,7 +4,6 @@ import {
 } from "./modules/Analysis/Data.module";
 import {
   clearTimeStorage,
-  onTabTrack,
   processTabChanged,
 } from "./modules/Analysis/TimeTracking.module";
 import { browserColor } from "./modules/Tools/Color.module";
@@ -15,6 +14,7 @@ import {
   DeleteTimeRule,
   notificationSending,
 } from "./modules/Tools/TimeAlert.module";
+
 
 // starts when you are on chrome window
 chrome.windows.onFocusChanged.addListener(function (windowId: number) {
@@ -29,7 +29,7 @@ chrome.windows.onFocusChanged.addListener(function (windowId: number) {
 // update time tracking when you act on tabs
 chrome.tabs.onActivated.addListener(function () {
   setBrowserOffline(false);
-  onTabTrack();
+  processTabChanged(true)
 });
 
 chrome.tabs.onUpdated.addListener(function () {
@@ -68,12 +68,14 @@ chrome.runtime.onConnect.addListener(function (port) {
   });
 });
 
+// starts when an alarm occurs (timeAlert.module)
 chrome.alarms.onAlarm.addListener(function (alarm) {
   if (alarm.name === "timeNotification") {
     notificationSending();
   }
 });
 
+// Fires when a web request is completed (data.module)
 chrome.webRequest.onCompleted.addListener(
   function (event: any) {
     headersReceivedListener(event);

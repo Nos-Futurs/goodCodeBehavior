@@ -1,5 +1,9 @@
 import { storageObject } from "../Shared.module";
 
+/**
+ * Set not download rule for active tabs
+ * @param changeStatut 
+ */
 export function dontDownloadImage(changeStatut: boolean = false) {
   chrome.storage.local.get("downloadStatut", (result) => {
     const isDownloadObject = result["downloadStatut"];
@@ -58,8 +62,16 @@ export function dontDownloadImage(changeStatut: boolean = false) {
   });
 }
 
-// PRIVATE METHODS
 
+/* -------------------------------------------------------------------------- */
+/*                               PRIVATE METHODS                              */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Change the status on local storage to keep track of rules
+ * @param changeStatut 
+ * @param statut 
+ */
 const setDownloadStatus = (changeStatut: boolean, statut: boolean) => {
   if (changeStatut) {
     let newStorageInfo: any = {};

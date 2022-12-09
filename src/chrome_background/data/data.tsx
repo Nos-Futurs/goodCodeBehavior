@@ -22,6 +22,7 @@ const literPer100kmDiesel = 7 // source IEA - 2020 world mean
 const gCO2PerLiter = 2300 // estimate
 const gCO2_per_kmCar = (literPer100kmDiesel/100)*gCO2PerLiter
 
+
 export const dataForAnalysis = {
     "energy":{
         kWhPerByteDataCenter,

@@ -1,11 +1,20 @@
-// Isolate domain name from url
+/**
+ * Isolate domain name from url
+ * @param url 
+ * @returns 
+ */
 export function getDomainName(url: string) {
   const httpRemoved = url.split("//")[1];
   const domainName = httpRemoved.split("/")[0];
   return domainName;
 }
 
-// affect storage object
+/**
+ * affect storage object
+ * @param objectJSON 
+ * @param returnObject 
+ * @returns 
+ */
 export function storageObject(objectJSON: string, returnObject?: any) {
   if (
     JSON.stringify(objectJSON) !== "{}" &&
@@ -19,7 +28,12 @@ export function storageObject(objectJSON: string, returnObject?: any) {
   return returnObject !== undefined ? returnObject : {};
 }
 
-// remove wwww. for chart items legend
+
+/**
+ * remove wwww. for chart items legend
+ * @param domainName 
+ * @returns 
+ */
 export function cleanDomainName(domainName: string): string {
   if (domainName.slice(0, 4) === "www.") {
     return domainName.slice(4);

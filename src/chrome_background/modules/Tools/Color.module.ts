@@ -1,5 +1,9 @@
 import { getDomainName, storageObject } from "../Shared.module";
 
+/**
+ * Update color status or change color status for the all browser
+ * @param changeStatut 
+ */
 export function browserColor(changeStatut: boolean = false) {
   // get current tab
   chrome.tabs.query({}, function (tabs) {
@@ -42,8 +46,17 @@ export function browserColor(changeStatut: boolean = false) {
   });
 }
 
-// PRIVATE FUNCTIONS
 
+/* -------------------------------------------------------------------------- */
+/*                               PRIVATE METHODS                              */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Insert or remove CSS to set the browser to black and white
+ * 
+ * @param tabs 
+ * @param toBlackAndWhite 
+ */
 function changeTabsToBW(tabs: chrome.tabs.Tab[], toBlackAndWhite: boolean) {
   for (let index = 0; index < tabs.length; index++) {
     let tabIndexId = tabs[index].id;

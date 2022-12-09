@@ -4,7 +4,11 @@ const tabsTime = "tabsTimeObject";
 const lastActiveUrlDomain = "lastActivetab";
 const startingTimeAnalyseDate = "startingTimeAnalyseDate";
 
-// Use local storage to calculate the time you (actively) spend on each webSite
+
+/**
+ * Use local storage to calculate the time you (actively) spend on each webSite
+ * @param isChromeActive 
+ */
 export function processTabChanged(isChromeActive: boolean) {
   chrome.tabs.query({ active: true }, function (tabs) {
     if (tabs.length > 0 && tabs[0] !== null) {
@@ -86,10 +90,10 @@ export function processTabChanged(isChromeActive: boolean) {
   });
 }
 
-export function onTabTrack() {
-  processTabChanged(true);
-}
 
+/**
+ * Clear time data from local storage
+ */
 export function clearTimeStorage() {
   let newStorageInfo: any = {};
   newStorageInfo[tabsTime] = {};

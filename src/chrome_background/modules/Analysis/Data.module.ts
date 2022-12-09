@@ -1,5 +1,10 @@
 import { getDomainName, storageObject } from "../Shared.module";
 
+/**
+ * Check if the request headers have a content-length value
+ * If not, set this value to 0
+ * @param details //information regarding the request
+ */
 export const headersReceivedListener = (details: any) => {
   if (details.initiator || details.url) {
     const url = !details.initiator ? details.url : details.initiator;
@@ -17,16 +22,24 @@ export const headersReceivedListener = (details: any) => {
   }
 };
 
+
+/**
+ * method to clear the local storage from all the information regarding the data exhanges
+ */
 export const clearCarbonAnalysis = () => {
   let newStorageInfo: any = {};
   newStorageInfo["TabsData"] = null;
   chrome.storage.local.set(newStorageInfo, function () {});
 };
 
-// PRIVATE METHODS
+
+
+/* -------------------------------------------------------------------------- */
+/*                               PRIVATE METHODS                              */
+/* -------------------------------------------------------------------------- */
 
 /**
- *
+ * Update or set data exchange value for a specified website
  * @param origin // origin url of requests
  * @param byteLength // byte length in bytes
  */

@@ -4,7 +4,15 @@ const timeRules = "timeRulesObject";
 const lastActiveUrlDomain = "lastActivetab";
 const tabsTime = "tabsTimeObject";
 
-// Create new time rule
+
+/**
+ * Create new time rule, first set it in local storage 
+ * then create alarm every minute to check the status of the time rule
+ * 
+ * @param domain 
+ * @param time 
+ * @param nextWarning 
+ */
 export function createNewTimeRule(
   domain: string,
   time: number,
@@ -23,7 +31,11 @@ export function createNewTimeRule(
   createTimeAlarm();
 }
 
-// Delete time rule
+/**
+ * Delete time rule in local storage
+ * 
+ * @param domain 
+ */
 export function DeleteTimeRule(domain: string) {
   chrome.storage.local.get([timeRules], function (result) {
     const timeRulesJSON = result[timeRules];
@@ -38,6 +50,9 @@ export function DeleteTimeRule(domain: string) {
   });
 }
 
+/**
+ * Every time an alarm occurs we check the rules and send a notification if necessary
+ */
 export const notificationSending = () => {
   chrome.storage.local.get(
     [timeRules, lastActiveUrlDomain, tabsTime],
@@ -101,6 +116,14 @@ export const notificationSending = () => {
   );
 };
 
+
+/* -------------------------------------------------------------------------- */
+/*                               PRIVATE METHODS                              */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * create time alarm every minute to check rules status
+ */
 const createTimeAlarm = () => {
   chrome.alarms.getAll(function (result) {
     if (result.length === 0) {

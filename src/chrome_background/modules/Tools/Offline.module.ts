@@ -1,5 +1,9 @@
 import { storageObject } from "../Shared.module";
 
+/**
+ * Set or remove rules for non active tabs
+ * @param changeStatut 
+ */
 export function setBrowserOffline(changeStatut: boolean = false) {
   const data = chrome.storage.local.get("offlineStatut", (result) => {
     const offlineStatut = storageObject(result["offlineStatut"], false);
@@ -54,8 +58,16 @@ export function setBrowserOffline(changeStatut: boolean = false) {
   });
 }
 
-// PRIVATE METHODS
 
+/* -------------------------------------------------------------------------- */
+/*                               PRIVATE METHODS                              */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Update local storage to keep track of active rules
+ * @param changeStatut 
+ * @param statut 
+ */
 const setOfflineStatus = (changeStatut: boolean, statut: boolean) => {
   if (changeStatut) {
     let newStorageInfo: any = {};
