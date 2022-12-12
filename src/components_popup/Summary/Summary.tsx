@@ -37,10 +37,11 @@ export const Summary = ({}: SummaryProps) => {
       }
       setTimeActive(activeTime);
       setUsedEnergy(
-        energyUsed + dataForAnalysis.energy.kWhPerMinuteDevice * activeTime
+        energyUsed +
+          (dataForAnalysis.energy.kWhPerMinuteDevice * activeTime) / 60
       );
       setCO2Equivalent(
-        (energyUsed + dataForAnalysis.energy.kWhPerMinuteDevice * activeTime) *
+        (energyUsed + dataForAnalysis.energy.kWhPerMinuteDevice * activeTime / 60) *
           dataForAnalysis.carbonIntensity.byRegion
             .carbonIntensityFactorIngCO2PerKWh.global
       );
@@ -114,7 +115,10 @@ export const Summary = ({}: SummaryProps) => {
             style={{ width: "28px", margin: "6px 6px 6px 15px" }}
           />
           <div style={{ paddingLeft: "15px", fontSize: "15px" }}>
-            {usedEnergy.toFixed(2).toString() + " kWh (" + co2Equivalent.toFixed(0).toString() + " gCO2)"}
+            {usedEnergy.toFixed(2).toString() +
+              " kWh (" +
+              co2Equivalent.toFixed(0).toString() +
+              " gCO2)"}
           </div>
         </div>
       </div>

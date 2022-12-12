@@ -4,11 +4,11 @@ import { storageObject } from "../../../chrome_background/modules/Shared.module"
 import { useModalContext } from "../../Modal/modalContext";
 import { InfosButton } from "../../Shared/Buttons/InfosButton";
 import { InfosEnum } from "../../Shared/methods/enum";
+import car from "./../../Assets/car.png";
 import co2Cloud from "./../../Assets/co2-cloud.png";
 import dataIcon from "./../../Assets/data.png";
 import lightbulb from "./../../Assets/lightbulb.png";
 import lighting from "./../../Assets/lighting.png";
-import car from "./../../Assets/car.png";
 import { ItemTracking } from "./Item";
 import { energyAndCarbonFromBytes } from "./methods/carbonAnalysis.methods";
 
@@ -59,11 +59,10 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
 
   const gramCO2 =
     CO2Equivalent +
-    dataForAnalysis.energy.kWhPerMinuteDevice *
-      time *
+    ((dataForAnalysis.energy.kWhPerMinuteDevice * time) / 60) *
       dataForAnalysis.carbonIntensity.byRegion.carbonIntensityFactorIngCO2PerKWh
         .global;
- 
+
   return (
     <div
       style={{
@@ -94,7 +93,8 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
         <ItemTracking
           text={"Energy used:"}
           number={
-            energyEquivalent + dataForAnalysis.energy.kWhPerMinuteDevice * time
+            energyEquivalent +
+            (dataForAnalysis.energy.kWhPerMinuteDevice * time) / 60
           }
           icon={lighting}
           measures={"kWh"}
@@ -111,7 +111,7 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
             text={"Equivalent to a light bulb during"}
             number={Math.floor(
               (energyEquivalent +
-                dataForAnalysis.energy.kWhPerMinuteDevice * time) /
+                dataForAnalysis.energy.kWhPerMinuteDevice * time / 60) /
                 (dataForAnalysis.examples.lightbulbPowerInWatt / 1000)
             )}
             icon={lightbulb}
@@ -120,7 +120,7 @@ export const EnergyCarbonTracking = ({ port }: EnergyCarbonTrackingProps) => {
           />
           <ItemTracking
             text={"Car ride quivalence"}
-            number={gramCO2/dataForAnalysis.examples.gCO2_per_kmCar}
+            number={gramCO2 / dataForAnalysis.examples.gCO2_per_kmCar}
             icon={car}
             measures={"km"}
           />
