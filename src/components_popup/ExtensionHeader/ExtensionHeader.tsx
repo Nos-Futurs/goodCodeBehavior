@@ -1,5 +1,5 @@
 import React from "react";
-import fake_logo from "./../Assets/GCB_Logo.png";
+import GCB_logo from "./../Assets/GCB_Logo.png";
 
 interface ExtensionHeaderProps {}
 
@@ -16,7 +16,7 @@ export const ExtensionHeader = ({}: ExtensionHeaderProps) => {
         margin: "10px",
       }}
     >
-      <img src={fake_logo} style={{ paddingRight: "15px", width: "60px" }} />
+      <img src={GCB_logo} style={{ paddingRight: "15px", width: "60px" }} />
       <text>Good Code Behaviour</text>
     </header>
   );

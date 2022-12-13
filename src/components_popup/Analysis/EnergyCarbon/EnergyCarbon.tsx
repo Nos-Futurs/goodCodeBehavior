@@ -10,7 +10,7 @@ import dataIcon from "./../../Assets/data.png";
 import lightbulb from "./../../Assets/lightbulb.png";
 import lighting from "./../../Assets/lighting.png";
 import { ItemTracking } from "./Item";
-import { energyAndCarbonFromBytes } from "./methods/carbonAnalysis.methods";
+import { energyAndCarbonFromBytes } from "../methods/carbonAnalysis.methods";
 
 interface EnergyCarbonTrackingProps {
   port: chrome.runtime.Port;

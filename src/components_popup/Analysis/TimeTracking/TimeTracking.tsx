@@ -5,8 +5,8 @@ import { IconButton } from "../../Shared/Buttons/IconButton";
 import { InfosButton } from "../../Shared/Buttons/InfosButton";
 import { InfosEnum } from "../../Shared/methods/enum";
 import { ChartBlock } from "../../Shared/PieChart/ChartBlock";
+import { trackingPercentage } from "../methods/analysis.methods";
 import details from "./../../Assets/details.png";
-import { timeTrackingPercentage } from "./Time.methods";
 import { TimeTrackingDetails } from "./TimeTrackingDetails";
 interface TimeTrackingProps {
   port: chrome.runtime.Port;
@@ -32,14 +32,14 @@ export const TimeTracking = ({ port }: TimeTrackingProps) => {
       const startingAnalyseDate = storageObject(
         data["startingTimeAnalyseDate"]
       );
-      let dataArray: Array<{domain: string, time: number}> = [];
+      let dataArray: Array<{ domain: string; value: number }> = [];
       for (let timeInfos in dataObject) {
         dataArray.push({
           domain: timeInfos,
-          time: dataObject[timeInfos].trackedSeconds,
+          value: dataObject[timeInfos].trackedSeconds,
         });
       }
-      setChartData(timeTrackingPercentage(dataArray));
+      setChartData(trackingPercentage(dataArray));
       setStartDate(new Date(startingAnalyseDate));
       setTimeTracked(dataArray);
     };

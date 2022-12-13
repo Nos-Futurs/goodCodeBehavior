@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { dataForAnalysis } from "../../chrome_background/data/data";
 import { storageObject } from "../../chrome_background/modules/Shared.module";
-import { energyAndCarbonFromBytes } from "../Analysis/EnergyCarbon/methods/carbonAnalysis.methods";
-import { formatItemTime } from "../Analysis/TimeTracking/Time.methods";
+import { energyAndCarbonFromBytes } from "../Analysis/methods/carbonAnalysis.methods";
+import { formatItemTime } from "../Analysis/methods/analysis.methods";
 import clock from "./../Assets/clock.png";
 import lighting from "./../Assets/lighting.png";
 
@@ -41,7 +41,8 @@ export const Summary = ({}: SummaryProps) => {
           (dataForAnalysis.energy.kWhPerMinuteDevice * activeTime) / 60
       );
       setCO2Equivalent(
-        (energyUsed + dataForAnalysis.energy.kWhPerMinuteDevice * activeTime / 60) *
+        (energyUsed +
+          (dataForAnalysis.energy.kWhPerMinuteDevice * activeTime) / 60) *
           dataForAnalysis.carbonIntensity.byRegion
             .carbonIntensityFactorIngCO2PerKWh.global
       );
