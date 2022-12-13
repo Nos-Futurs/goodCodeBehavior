@@ -5,9 +5,9 @@ import { IconButton } from "../../Shared/Buttons/IconButton";
 import { InfosButton } from "../../Shared/Buttons/InfosButton";
 import { InfosEnum } from "../../Shared/methods/enum";
 import { ChartBlock } from "../../Shared/PieChart/ChartBlock";
+import { trackingPercentage } from "../methods/analysis.methods";
 import details from "./../../Assets/details.png";
 import { DataDetails } from "./DataDetails";
-import { dataTrackingPercentage } from "./methods/dataAnalysis.methods";
 
 interface EnergyCarbonTrackingProps {
   port: chrome.runtime.Port;
@@ -37,10 +37,10 @@ export const DataTracking = ({ port }: EnergyCarbonTrackingProps) => {
       for (let dataInfo in dataObject) {
         dataArray.push({
           domain: dataInfo,
-          bytes: parseInt(dataObject[dataInfo].bytes),
+          value: parseInt(dataObject[dataInfo].bytes),
         });
       }
-      const percentageArray = dataTrackingPercentage(dataArray);
+      const percentageArray = trackingPercentage(dataArray);
       setDataChartData(percentageArray);
       setStartDate(new Date(startingAnalyseDate));
       setAllDataTracked(dataArray);
