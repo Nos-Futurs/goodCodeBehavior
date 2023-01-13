@@ -1,27 +1,52 @@
-import { getDomainName, storageObject } from "../Shared.module";
+import {
+  getDomainName,
+  storageObject,
+  estimatedBinarySize,
+} from "../Shared.module";
+
+/**
+ * Check if the response headers have a content-length value
+ * If not, set this value to 0
+ * @param details //information regarding the response
+ */
+export const headersReceivedListener = (details: any) => {
+  if (!details.fromCache) {
+    // check if we used the network
+    if (details.initiator || details.url) {
+      const responseHeadersSize = estimatedBinarySize(details.responseHeaders);
+      const url = !details.initiator ? details.url : details.initiator;
+      if (url.slice(0, 19) !== "chrome-extension://") {
+        const origin = getDomainName(url);
+        const contentLengthFromResponse = details.responseHeaders.find(
+          (element: any) => element.name.toLowerCase() === "content-length"
+        );
+        const contentLength = !contentLengthFromResponse
+          ? { value: 0 }
+          : contentLengthFromResponse;
+        const requestSize = parseInt(contentLength.value, 10);
+        setByteLengthPerOrigin(origin, requestSize + responseHeadersSize);
+      }
+    }
+  }
+};
 
 /**
  * Check if the request headers have a content-length value
  * If not, set this value to 0
  * @param details //information regarding the request
  */
-export const headersReceivedListener = (details: any) => {
-  if (details.initiator || details.url) {
-    const url = !details.initiator ? details.url : details.initiator;
-    if (url.slice(0, 19) !== "chrome-extension://") {
-      const origin = getDomainName(url);
-      const contentLengthFromResponse = details.responseHeaders.find(
-        (element: any) => element.name.toLowerCase() === "content-length"
-      );
-      const contentLength = !contentLengthFromResponse
-        ? { value: 0 }
-        : contentLengthFromResponse;
-      const requestSize = parseInt(contentLength.value, 10);
-      setByteLengthPerOrigin(origin, requestSize);
+export const requestSentListener = (details: any) => {
+  if (details.requestHeaders) {
+    if (details.initiator || details.url) {
+      const requestHeadersSize = estimatedBinarySize(details.requestHeaders);
+      const url = !details.initiator ? details.url : details.initiator;
+      if (url.slice(0, 19) !== "chrome-extension://") {
+        const origin = getDomainName(url);
+        setByteLengthPerOrigin(origin, requestHeadersSize);
+      }
     }
   }
 };
-
 
 /**
  * method to clear the local storage from all the information regarding the data exhanges
@@ -31,8 +56,6 @@ export const clearCarbonAnalysis = () => {
   newStorageInfo["TabsData"] = null;
   chrome.storage.local.set(newStorageInfo, function () {});
 };
-
-
 
 /* -------------------------------------------------------------------------- */
 /*                               PRIVATE METHODS                              */

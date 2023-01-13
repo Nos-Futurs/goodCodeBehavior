@@ -1,6 +1,7 @@
 import {
   clearCarbonAnalysis,
   headersReceivedListener,
+  requestSentListener,
 } from "./modules/Analysis/Data.module";
 import {
   clearTimeStorage,
@@ -83,3 +84,13 @@ chrome.webRequest.onCompleted.addListener(
   { urls: ["https://*/*"] },
   ["responseHeaders"]
 );
+
+// Fires when a web request is sent (data.module)
+chrome.webRequest.onSendHeaders.addListener(
+  function (event: any) {
+    requestSentListener(event);
+  },
+  { urls: ["https://*/*"] },
+  ["requestHeaders"]
+);
+

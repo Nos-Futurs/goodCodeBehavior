@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "GPL-3.0-or-later",
   "description": "Chrome plugin to monitor your internet usage.",
-  "author":"Nos Futurs",
+  "author": "Nos Futurs",
   "scripts": {
     "clean": "rm -rf build",
     "start": "webpack serve --port 3000",
@@ -31,6 +31,7 @@
     "@babel/preset-react": "^7.18.6",
     "babel-loader": "^9.0.0",
     "css-loader": "^6.7.1",
+    "jotai": "^1.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-minimal-pie-chart": "^8.4.0",
