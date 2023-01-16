@@ -40,33 +40,3 @@ export function cleanDomainName(domainName: string): string {
     return domainName;
   }
 }
-
-
-/**
- * Get the estimated size of request and response headers
- * @param headers 
- * @returns 
- */
-export function estimatedBinarySize(headers: Array<any>): number {
-  let totalBytes = 0;
-  headers.map((header) => {
-    for (let key in header) {
-      totalBytes = binarySizePerType(key) + binarySizePerType(header[key]);
-    }
-  });
-  return totalBytes;
-}
-
-function binarySizePerType(element: any) {
-  const bytePerBoolean = 4;
-  const bytePerChar = 2;
-  const bytePerNumber = 8;
-  if (typeof element === "boolean") {
-    return bytePerBoolean;
-  } else if (typeof element === "string") {
-    return bytePerChar * element.length;
-  } else if (typeof element === "number") {
-    return bytePerNumber;
-  }
-  return 0;
-}

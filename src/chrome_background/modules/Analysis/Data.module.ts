@@ -1,8 +1,8 @@
 import {
   getDomainName,
   storageObject,
-  estimatedBinarySize,
 } from "../Shared.module";
+import { Buffer } from 'buffer';
 
 /**
  * Check if the response headers have a content-length value
@@ -13,7 +13,7 @@ export const headersReceivedListener = (details: any) => {
   if (!details.fromCache) {
     // check if we used the network
     if (details.initiator || details.url) {
-      const responseHeadersSize = estimatedBinarySize(details.responseHeaders);
+      const responseHeadersSize = Buffer.from(JSON.stringify(details.responseHeaders)).byteLength;
       const url = !details.initiator ? details.url : details.initiator;
       if (url.slice(0, 19) !== "chrome-extension://") {
         const origin = getDomainName(url);
@@ -23,8 +23,8 @@ export const headersReceivedListener = (details: any) => {
         const contentLength = !contentLengthFromResponse
           ? { value: 0 }
           : contentLengthFromResponse;
-        const requestSize = parseInt(contentLength.value, 10);
-        setByteLengthPerOrigin(origin, requestSize + responseHeadersSize);
+        const responseSize = parseInt(contentLength.value, 10);
+        setByteLengthPerOrigin(origin, responseSize + responseHeadersSize);
       }
     }
   }
@@ -38,7 +38,7 @@ export const headersReceivedListener = (details: any) => {
 export const requestSentListener = (details: any) => {
   if (details.requestHeaders) {
     if (details.initiator || details.url) {
-      const requestHeadersSize = estimatedBinarySize(details.requestHeaders);
+      const requestHeadersSize = Buffer.from(JSON.stringify(details.requestHeaders)).byteLength;
       const url = !details.initiator ? details.url : details.initiator;
       if (url.slice(0, 19) !== "chrome-extension://") {
         const origin = getDomainName(url);
