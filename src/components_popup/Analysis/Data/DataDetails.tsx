@@ -3,10 +3,10 @@ import React from "react";
 const setDecreasingOrder = (
   dataTracked: {
     domain: string;
-    bytes: number;
+    value: number;
   }[]
 ) => {
-  dataTracked.sort((a, b) => b.bytes - a.bytes);
+  dataTracked.sort((a, b) => b.value - a.value);
   return dataTracked;
 };
 
@@ -15,7 +15,7 @@ interface DataDetailsProps {
   startDate: Date | null;
   dataTracked: {
     domain: string;
-    bytes: number;
+    value: number;
   }[];
 }
 
@@ -27,7 +27,7 @@ export const DataDetails = ({
   const eraseTimeData = () => {
     port.postMessage("ResetAnalysis");
   };
-  const timeTrackedDescending = setDecreasingOrder(dataTracked);
+  const dataTrackedDescending = setDecreasingOrder(dataTracked);
 
   return (
     <div style={{ margin: "15px" }}>
@@ -45,14 +45,14 @@ export const DataDetails = ({
         <button onClick={eraseTimeData}>Reset Analysis</button>
       </div>
       <div>
-        {timeTrackedDescending.map(
-          (item: { domain: string; bytes: number }) => {
-            if (Math.floor(item.bytes / (1000 * 1000)) > 0) {
+        {dataTrackedDescending.map(
+          (item: { domain: string; value: number }) => {
+            if (Math.floor(item.value / (1000 * 1000)) > 0) {
               return (
                 <div style={{ paddingTop: "3px" }}>
                   {item.domain +
                     " : " +
-                    Math.floor(item.bytes / (1000 * 1000)) +
+                    Math.floor(item.value / (1000 * 1000)) +
                     " Mb"}
                 </div>
               );

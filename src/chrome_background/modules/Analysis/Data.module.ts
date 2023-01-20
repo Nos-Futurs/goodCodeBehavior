@@ -10,7 +10,7 @@ import { Buffer } from 'buffer';
  * @param details //information regarding the response
  */
 export const headersReceivedListener = (details: any) => {
-  if (!details.fromCache) {
+  if (!details.fromCache && details.responseHeaders) {
     // check if we used the network
     if (details.initiator || details.url) {
       const responseHeadersSize = Buffer.from(JSON.stringify(details.responseHeaders)).byteLength;
